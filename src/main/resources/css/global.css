@@ -1,0 +1,65 @@
+.mb-5px {
+    margin-bottom: 5px;
+}
+
+.mxw-100px {
+    max-width: 100px;
+}
+
+.mxh-40px {
+    max-height: 40px;
+}
+
+.bor-rad-160px {
+    border-radius: 160px;
+}
+
+.mt-20px {
+    margin-top: 20px;
+}
+
+.mt-10px {
+    margin-top: 10px;
+}
+
+.ml-10px {
+    margin-left: 10px;
+}
+
+.mr-10px {
+    margin-right: 10px;
+}
+
+.fa-fas {
+    width: 15px;
+    height: auto;
+}
+
+.device-col {
+    box-shadow: 0 0 6px;
+    border-radius: 15px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+.device-col-img {
+    border-radius: 10px;
+    width: 90%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-bottom: 10px;
+}
+
+.device-attributes-span {
+    margin-left: 5%;
+    word-break: break-all;
+    width: 90%;
+    margin-top: 5px;
+}
+
+.device-attributes-button {
+    margin-left: 5%;
+    margin-top: 5px;
+    margin-bottom: 5%;
+}

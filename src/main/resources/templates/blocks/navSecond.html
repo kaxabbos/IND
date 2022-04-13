@@ -1,0 +1,47 @@
+<nav th:fragment="navSecond"
+     class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+    <div class="container-fluid">
+        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
+            <i class="fas fa-bars" style="color: rgb(183,97,18);"></i>
+        </button>
+        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input class="bg-light form-control border-0 small" type="text"
+                       placeholder="Поиск..." style="font-size: 16px;">
+                <button class="btn btn-primary py-0" type="submit" style="background: rgb(183,97,18);">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+        <ul class="navbar-nav flex-nowrap ms-auto">
+            <li class="nav-item dropdown d-sm-none no-arrow">
+                <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                   href="#">
+                    <i class="fas fa-search" style="color: rgb(183,97,18);"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
+                     aria-labelledby="searchDropdown">
+                    <form class="me-auto navbar-search w-100">
+                        <div class="input-group">
+                            <input class="bg-light form-control border-0 small" type="text"
+                                   placeholder="Поиск...">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary py-0" type="button"
+                                        style="background: rgb(183,97,18);">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+            <li class="nav-item dropdown no-arrow">
+                <div class="nav-item dropdown no-arrow">
+                                <span th:text="${usernameLastname}"
+                                      class="d-none d-lg-inline me-2 text-gray-600 small"></span>
+                    <img class="rounded-circle border img-profile" th:src="'/img/' + ${avatar}" height="50" width="50">
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

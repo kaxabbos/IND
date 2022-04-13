@@ -1,0 +1,80 @@
+<nav th:fragment="nav">
+    <div class="container-fluid d-flex flex-column p-0">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="/index">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-industry"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">
+                <span>IND</span>
+            </div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <ul class="navbar-nav text-light" id="accordionSidebar">
+            <li class="nav-item">
+                <a class="nav-link" href="/index">
+                    <i class="fas fa-table fa-fas"></i>
+                    <span class="fs-16px">Устройства</span>
+                    <span th:if="${def}" th:text="${def}" class="badge bg-warning fs-14px"></span>
+                </a>
+            </li>
+            <li th:if="${role != 'NOT'}" class="nav-item">
+                <a class="nav-link" href="/myDevices">
+                    <i class="fas fa-table fa-fas"></i>
+                    <span class="fs-16px">Мои устройства</span>
+                </a>
+            </li>
+            <li th:if="${role == 'Техник' || role == 'Тестировщик'}" class="nav-item">
+                <a class="nav-link" href="/service">
+                    <i class="fas fa-table fa-fas"></i>
+                    <span class="fs-16px">Обслуживаю</span>
+                    <span th:if="${myDef}" class="badge bg-warning fs-14px"></span>
+                </a>
+            </li>
+            <li th:if="${role != 'NOT'}" class="nav-item">
+                <a class="nav-link" href="/profile">
+                    <i class="fa fa-users fa-fas"></i>
+                    <span class="fs-16px">Профиль</span>
+                </a>
+            </li>
+            <li th:if="${role == 'Администратор'}" class="nav-item">
+                <a class="nav-link" href="/profiles">
+                    <i class="fa fa-users fa-fas"></i>
+                    <span class="fs-16px">Пользователи</span>
+                </a>
+            </li>
+            <li th:if="${role == 'NOT'}" class="nav-item">
+                <a class="nav-link" href="/login">
+                    <i class="far fa-user-circle fa-fas"></i>
+                    <span class="fs-16px">Вход</span>
+                </a>
+            </li>
+            <li th:if="${role == 'NOT'}" class="nav-item">
+                <a class="nav-link" href="/reg">
+                    <i class="fas fa-user-circle fa-fas"></i>
+                    <span class="fs-16px">Регистрация</span>
+                </a>
+            </li>
+            <li th:if="${role != 'NOT'}" class="nav-item">
+                <a class="nav-link" href="/add">
+                    <i class="fas fa-plus fa-fas"></i>
+                    <span class="fs-16px">Добавить устройство</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">
+                    <i class="far fa-star fa-fas"></i>
+                    <span class="fs-16px">О нас</span>
+                </a>
+            </li>
+            <li th:unless="${role == 'NOT'}" class="nav-item">
+                <form class="nav-link" action="/logout" method="post">
+                    <i class="far fa-user-circle fa-fas"></i>
+                    <button class="clean-label fs-16px" style="margin-left: -4px;">Выход</button>
+                </form>
+            </li>
+        </ul>
+        <div class="text-center d-none d-md-inline">
+            <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
+        </div>
+    </div>
+</nav>

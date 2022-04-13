@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>IND - Добавить утсройство</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <nav th:insert="blocks\nav :: nav"
+         class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+         style="background: rgb(183,97,18);">
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks\navSecond :: navSecond"></div>
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Добавить устройство</h3>
+                <div th:if="${message}" class="text-center" style="margin-top: 20px;">
+                    <div class="alert alert-success" role="alert">
+                        <strong><span th:text="${message}"></span></strong>
+                    </div>
+                </div>
+                <form action="/device/add" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label text-dark">
+                                    <strong>
+                                        Имя устройство (обязательно)
+                                    </strong>
+                                </label>
+                                <input class="form-control" type="text" name="name"
+                                       placeholder="Имя устройства" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label text-dark">
+                                    <strong>Тип устройства (обязательно)</strong>
+                                </label>
+                                <select class="form-select" name="type">
+                                    <option th:each="type : ${types}"
+                                            th:value="${type}"
+                                            th:text="${type}"
+                                            th:if="${type != DeviceTypeAll}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label text-dark">
+                                    <strong>Короткое описание (опционально)</strong>
+                                </label>
+                                <input class="form-control" type="text" name="description" placeholder="Описание">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label text-dark">
+                                    <strong>Фотография (опционально)</strong>
+                                </label>
+                                <input class="form-control" type="file" name="file" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit" style="margin-right: 10px;">Добавить</button>
+                    <button class="btn btn-secondary" type="reset">Очистить</button>
+                </form>
+            </div>
+        </div>
+        <footer th:insert="blocks\footer :: footer"
+                class="bg-white d-lg-flex justify-content-lg-center align-items-lg-center sticky-footer mxh-40px">
+        </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+<script src="/js/min.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>

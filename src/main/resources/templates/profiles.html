@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>IND - Профили</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <nav th:insert="blocks\nav :: nav"
+         class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+         style="background: rgb(183,97,18);">
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks\navSecond :: navSecond"></div>
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Пользователи</h3>
+                <div th:if="${message}" class="text-center" style="margin-top: 20px;">
+                    <div class="alert alert-success" role="alert">
+                        <strong><span th:text="${message}"></span></strong>
+                    </div>
+                </div>
+                <div class="row mb-5px">
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                        <label class="col-form-label text-dark">
+                            <strong>Имя</strong><br/>
+                        </label>
+                    </div>
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                        <label class="col-form-label text-dark">
+                            <strong>Фамилия</strong>
+                        </label>
+                    </div>
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                        <label class="col-form-label text-dark">
+                            <strong>Пароль</strong>
+                        </label>
+                    </div>
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                        <label class="col-form-label text-dark">
+                            <strong>Выберите роль</strong>
+                        </label>
+                    </div>
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center mxw-100px"></div>
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center mxw-100px"></div>
+                </div>
+                <div class="row mb-5px" th:each="user : ${usersList}">
+                    <div class="col">
+                        <form th:action="'/profiles/' + ${user.id} + '/edit'" method="post">
+                            <div class="row">
+                                <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                                    <input th:placeholder="${user.username}"
+                                           type="text" class="form-control" readonly/>
+                                </div>
+                                <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                                    <input th:placeholder="${user.lastname}"
+                                           type="text" class="form-control" readonly/>
+                                </div>
+                                <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                                    <input th:placeholder="${user.password}"
+                                           type="email" class="form-control" readonly/>
+                                </div>
+                                <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                                    <select class="form-select" name="role">
+                                        <option th:each="role : ${roles}"
+                                                th:value="${role}"
+                                                th:label="${role}"
+                                                th:selected="${role == user.role}"
+                                                th:if="${role != roleUnselected}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col d-lg-flex justify-content-lg-center align-items-lg-center mxw-100px">
+                                    <button class="btn btn-primary btn-sm fs-16px" type="submit">Изменить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center mxw-100px">
+                        <form th:action="'/profiles/' + ${user.id} + '/delete'" method="post">
+                            <button class="btn btn-danger btn-sm fs-16px" type="submit">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:insert="blocks\footer :: footer"
+                class="bg-white d-lg-flex justify-content-lg-center align-items-lg-center sticky-footer mxh-40px">
+        </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+<script src="/js/min.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>

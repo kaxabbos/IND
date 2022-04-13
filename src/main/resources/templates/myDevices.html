@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>IND - Мои устройства</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <nav th:insert="blocks\nav :: nav"
+         class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+         style="background: rgb(183,97,18);">
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks\navSecond :: navSecond"></div>
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Мои устройства</h3>
+                <div class="row g-0 row-cols-5 d-lg-flex">
+                    <div th:each="device : ${devices}" class="col device-col">
+                        <img th:src="'/img/' + ${device.file}"
+                             class="d-lg-flex justify-content-lg-center align-items-lg-center device-col-img">
+                        <span class="d-flex d-lg-flex device-attributes-span">Название:&nbsp;
+                            <span th:text="${device.name}"></span>
+                        </span>
+                        <span class="d-flex d-lg-flex device-attributes-span">Тип:&nbsp;
+                            <span th:text="${device.deviceType}"></span>
+                        </span>
+                        <span th:if="${device.description}" class="d-flex d-lg-flex device-attributes-span">Описание:&nbsp;
+                            <span th:text="${device.description}"></span>
+                        </span>
+                        <span th:if="${device.serves}" class="d-flex d-lg-flex device-attributes-span">Обслуживает:&nbsp;
+                            <span th:text="${device.serves}"></span>
+                        </span>
+                        <span class="d-flex d-lg-flex device-attributes-span mb-5px">Статус:&nbsp;
+                            <span th:text="${device.status}"></span>
+                        </span>
+                        <a th:if="${device.status == serviceable}"
+                           th:href="'/device/' + ${device.id} + '/faulty'"
+                           class="btn btn-primary device-attributes-button">Неисправна</a>
+                        <a th:if="${device.status == serviceable}"
+                           th:href="'/device/' + ${device.id} + '/test'"
+                           class="btn btn-primary device-attributes-button">Протестить</a>
+                        <a th:href="'/device/' + ${device.id} + '/edit'"
+                           class="btn btn-success device-attributes-button">Редактировать</a>
+                        <a th:href="'/device/' + ${device.id} + '/delete'"
+                           class="btn btn-danger device-attributes-button">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:insert="blocks\footer :: footer"
+                class="bg-white d-lg-flex justify-content-lg-center align-items-lg-center sticky-footer mxh-40px">
+        </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+<script src="/js/min.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>
