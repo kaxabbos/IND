@@ -45,7 +45,6 @@ public class ProfileCont extends Global {
         }
 
         if (!password.equals("") && !passwordRepeat.equals("")) {
-            System.out.println("1");
             if (!password.equals(passwordRepeat)) {
                 model.addAttribute("message",
                         "Новые пароли не совпадают");
@@ -69,13 +68,13 @@ public class ProfileCont extends Global {
         if (avatar != null && !Objects.requireNonNull(avatar.getOriginalFilename()).isEmpty()) {
             String uuidFile = UUID.randomUUID().toString();
             boolean createDir = true;
-            String result_poster = "";
+            String res = "";
             try {
                 File uploadDir = new File(uploadImg);
                 if (!uploadDir.exists()) createDir = uploadDir.mkdir();
                 if (createDir) {
-                    result_poster = "avatars/" + uuidFile + "_" + avatar.getOriginalFilename();
-                    avatar.transferTo(new File(uploadImg + "/" + result_poster));
+                    res = "avatars/" + uuidFile + "_" + avatar.getOriginalFilename();
+                    avatar.transferTo(new File(uploadImg + "/" + res));
                 }
             } catch (IOException e) {
                 model.addAttribute("message", "Слишком большой размер аватарки");
@@ -84,7 +83,7 @@ public class ProfileCont extends Global {
                 return "profile";
             }
             Users user = checkUser();
-            user.setAvatar(result_poster);
+            user.setAvatar(res);
             repoUsers.save(user);
         }
 
