@@ -4,9 +4,9 @@
         <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
             <i class="fas fa-bars" style="color: rgb(183,97,18);"></i>
         </button>
-        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <form action="/index/search" method="post" class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-                <input class="bg-light form-control border-0 small" type="text"
+                <input class="bg-light form-control border-0 small" type="text" name="search"
                        placeholder="Поиск..." style="font-size: 16px;">
                 <button class="btn btn-primary py-0" type="submit" style="background: rgb(183,97,18);">
                     <i class="fas fa-search"></i>
@@ -20,11 +20,11 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
                      aria-labelledby="searchDropdown">
-                    <form class="me-auto navbar-search w-100">
+                    <form action="/index/search" method="post" class="me-auto navbar-search w-100">
                         <div class="input-group">
-                            <input class="bg-light form-control border-0 small" type="text" placeholder="Поиск...">
+                            <input name="search" class="bg-light form-control border-0 small" type="text" placeholder="Поиск...">
                             <div class="input-group-append">
-                                <button class="btn btn-primary py-0" type="button"
+                                <button class="btn btn-primary py-0" type="submit"
                                         style="background: rgb(183,97,18);">
                                     <i class="fas fa-search"></i>
                                 </button>

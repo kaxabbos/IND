@@ -28,5 +28,11 @@ public class IndexCont extends Global {
         return "index";
     }
 
+    @PostMapping("/index/search")
+    String searchStatusType(Model model, @RequestParam String search) {
+        attributesSearch(model, search);
+        return "index";
+    }
+
 
 }

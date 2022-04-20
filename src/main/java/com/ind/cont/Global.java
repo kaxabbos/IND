@@ -77,6 +77,21 @@ public class Global {
         model.addAttribute("deviceTypeSelected", type);
     }
 
+    protected void attributesSearch(Model model, String search) {
+        attributes(model);
+
+        List<Devices> temp = new ArrayList<>();
+        for (Devices i : repoDevices.findAll()) if (i.getName().contains(search)) temp.add(i);
+
+        model.addAttribute("devices", temp);
+        model.addAttribute("test", Status.Протестить);
+        model.addAttribute("unserviceable", Status.Неисправен);
+        model.addAttribute("statuses", Status.values());
+        model.addAttribute("deviceStatusSelected", Status.Все);
+        model.addAttribute("types", DeviceType.values());
+        model.addAttribute("deviceTypeSelected", DeviceType.Все);
+    }
+
     protected String checkUserRole() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
