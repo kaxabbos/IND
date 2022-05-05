@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface RepoDevices extends JpaRepository<Devices, Long> {
-    Devices findByName(String name);
 
     List<Devices> findByUserId(long id);
 

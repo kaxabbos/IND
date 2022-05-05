@@ -23,7 +23,7 @@ public class ProfilesCont extends Global {
     }
 
     @PostMapping("/profiles/{id}/edit")
-    public String profileEditRole(Model model, @PathVariable(value = "id") Long id, @RequestParam Role role) {
+    public String profileEditRole(@PathVariable(value = "id") Long id, @RequestParam Role role) {
         Users user = repoUsers.getById(id);
         user.setRole(role);
         repoUsers.save(user);

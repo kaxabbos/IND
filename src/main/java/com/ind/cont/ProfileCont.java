@@ -29,16 +29,11 @@ public class ProfileCont extends Global {
     }
 
     @PostMapping("/profile/edit")
-    String profileEdit(
-            Model model,
-            @RequestParam String username, @RequestParam String lastname, @RequestParam String email,
-            @RequestParam String passwordOld, @RequestParam String password, @RequestParam String passwordRepeat
-    ) {
+    String profileEdit(Model model, @RequestParam String username, @RequestParam String lastname, @RequestParam String email, @RequestParam String passwordOld, @RequestParam String password, @RequestParam String passwordRepeat) {
         Users user = checkUser();
 
         if (!passwordOld.equals(user.getPassword())) {
-            model.addAttribute("message",
-                    "Некорректный ввод текущего пароля");
+            model.addAttribute("message", "Некорректный ввод текущего пароля");
             attributes(model);
             model.addAttribute("user", checkUser());
             return "profile";
@@ -46,8 +41,7 @@ public class ProfileCont extends Global {
 
         if (!password.equals("") && !passwordRepeat.equals("")) {
             if (!password.equals(passwordRepeat)) {
-                model.addAttribute("message",
-                        "Новые пароли не совпадают");
+                model.addAttribute("message", "Новые пароли не совпадают");
                 attributes(model);
                 model.addAttribute("user", checkUser());
                 return "profile";
