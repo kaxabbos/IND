@@ -157,7 +157,7 @@ public class AEDCont extends Global {
     @GetMapping("/device/{id}/test")
     public String testDevice(Model model, @PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Протестить);
+        devices.setStatus(Status.Протестировать);
         devices.setServes(null);
         devices.setServesId(0);
         repoDevices.save(devices);

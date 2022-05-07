@@ -41,7 +41,7 @@
                            class="btn btn-success device-attributes-button">Исправна</a>
                         <a th:if="${role == 'Техник'}"
                            th:href="'/device/' + ${device.id} + '/test'"
-                           class="btn btn-primary device-attributes-button">Протестить</a>
+                           class="btn btn-primary device-attributes-button">Протестировать</a>
                         <a th:if="${role == 'Тестировщик'}"
                            th:href="'/device/' + ${device.id} + '/faulty'"
                            class="btn btn-primary device-attributes-button">Неисправна</a>

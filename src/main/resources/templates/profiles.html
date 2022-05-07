@@ -68,8 +68,7 @@
                                         <option th:each="role : ${roles}"
                                                 th:value="${role}"
                                                 th:label="${role}"
-                                                th:selected="${role == user.role}"
-                                                th:if="${role != roleUnselected}">
+                                                th:selected="${role == user.role}">
                                         </option>
                                     </select>
                                 </div>

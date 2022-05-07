@@ -42,7 +42,7 @@
                            class="btn btn-primary device-attributes-button">Неисправна</a>
                         <a th:if="${device.status == serviceable}"
                            th:href="'/device/' + ${device.id} + '/test'"
-                           class="btn btn-primary device-attributes-button">Протестить</a>
+                           class="btn btn-primary device-attributes-button">Протестировать</a>
                         <a th:href="'/device/' + ${device.id} + '/edit'"
                            class="btn btn-success device-attributes-button">Редактировать</a>
                         <a th:href="'/device/' + ${device.id} + '/delete'"

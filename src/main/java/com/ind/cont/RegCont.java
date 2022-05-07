@@ -13,7 +13,7 @@ import java.util.Objects;
 @Controller
 public class RegCont extends Global {
     @GetMapping("/reg")
-    public String reg(Model model) {
+    public String reg() {
         return "reg";
     }
 

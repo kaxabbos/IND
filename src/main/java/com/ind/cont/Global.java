@@ -49,7 +49,7 @@ public class Global {
         if (Objects.equals(checkUserRole(), String.valueOf(Role.Техник))) {
             model.addAttribute("def", (repoDevices.findByStatus(Status.Неисправен).size()));
         } else if (Objects.equals(checkUserRole(), String.valueOf(Role.Тестировщик))) {
-            model.addAttribute("def", (repoDevices.findByStatus(Status.Протестить).size()));
+            model.addAttribute("def", (repoDevices.findByStatus(Status.Протестировать).size()));
         }
     }
 
@@ -69,7 +69,7 @@ public class Global {
         else if (type == DeviceType.Все) temp = repoDevices.findByStatus(status);
         else temp = repoDevices.findByStatusAndDeviceType(status, type);
         model.addAttribute("devices", temp);
-        model.addAttribute("test", Status.Протестить);
+        model.addAttribute("test", Status.Протестировать);
         model.addAttribute("unserviceable", Status.Неисправен);
         model.addAttribute("statuses", Status.values());
         model.addAttribute("deviceStatusSelected", status);
@@ -84,7 +84,7 @@ public class Global {
         for (Devices i : repoDevices.findAll()) if (i.getName().contains(search)) temp.add(i);
 
         model.addAttribute("devices", temp);
-        model.addAttribute("test", Status.Протестить);
+        model.addAttribute("test", Status.Протестировать);
         model.addAttribute("unserviceable", Status.Неисправен);
         model.addAttribute("statuses", Status.values());
         model.addAttribute("deviceStatusSelected", Status.Все);
