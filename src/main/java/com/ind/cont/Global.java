@@ -15,9 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Global {
 
@@ -29,6 +27,17 @@ public class Global {
 
     @Value("${upload.img}")
     protected String uploadImg;
+
+//    protected Map<DeviceType, String> defDevices = new HashMap<>();
+//
+//    {
+//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
+//        defDevices.put(DeviceType.МФУ, "default/laptop.png");
+//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
+//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
+//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
+//    }
+
 
     protected String defAvatar = "default/avatar.jpeg";
     protected String defLaptop = "default/laptop.png";
