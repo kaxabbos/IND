@@ -30,7 +30,7 @@ public class AEDCont extends Global {
 
     @PostMapping("/device/add")
     public String addDevice(Model model, @RequestParam String name, @RequestParam DeviceType type, @RequestParam String description, @RequestParam MultipartFile file) {
-        Devices device = new Devices(name, type, checkUsernameLastname(), checkUserID(), Status.Исправен);
+        Devices device = new Devices(name, type, getUsernameLastname(), getUserID(), Status.Исправен);
 
         if (description == null || description.equals("")) device.setDescription(null);
         else device.setDescription(description);
@@ -148,8 +148,8 @@ public class AEDCont extends Global {
     public String repairDevice(Model model, @PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Ремонтируется);
-        devices.setServes(checkUsernameLastname());
-        devices.setServesId(checkUserID());
+        devices.setServes(getUsernameLastname());
+        devices.setServesId(getUserID());
         repoDevices.save(devices);
         return "redirect:/index";
     }
@@ -168,8 +168,8 @@ public class AEDCont extends Global {
     public String testingDevice(Model model, @PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Тестируется);
-        devices.setServes(checkUsernameLastname());
-        devices.setServesId(checkUserID());
+        devices.setServes(getUsernameLastname());
+        devices.setServesId(getUserID());
         repoDevices.save(devices);
         return "redirect:/index";
     }

@@ -33,6 +33,4 @@ public class IndexCont extends Global {
         attributesSearch(model, search);
         return "index";
     }
-
-
 }

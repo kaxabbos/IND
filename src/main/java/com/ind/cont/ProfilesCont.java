@@ -31,7 +31,7 @@ public class ProfilesCont extends Global {
 
     @PostMapping("/profiles/{id}/delete")
     public String profileDelete(Model model, @PathVariable(value = "id") Long id) {
-        if (id == checkUser().getId()) {
+        if (id == getUser().getId()) {
             model.addAttribute("usersList", usersList());
             model.addAttribute("roles", Arrays.asList(Role.values()));
             model.addAttribute("message", "Вы не можете удалить самого себя");

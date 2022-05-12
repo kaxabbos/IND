@@ -42,20 +42,19 @@ public class Global {
     protected String defXerox = "default/xerox.png";
 
     protected void attributes(Model model) {
-        model.addAttribute("avatar", checkAvatar());
-        model.addAttribute("usernameLastname", checkUsernameLastname());
-        model.addAttribute("avatar", checkAvatar());
-        model.addAttribute("role", checkUserRole());
-        if (Objects.equals(checkUserRole(), String.valueOf(Role.Техник))) {
+        model.addAttribute("avatar", getAvatar());
+        model.addAttribute("usernameLastname", getUsernameLastname());
+        model.addAttribute("avatar", getAvatar());
+        model.addAttribute("role", getUserRole());
+        if (Objects.equals(getUserRole(), String.valueOf(Role.Техник))) {
             model.addAttribute("def", (repoDevices.findByStatus(Status.Неисправен).size()));
-        } else if (Objects.equals(checkUserRole(), String.valueOf(Role.Тестировщик))) {
+        } else if (Objects.equals(getUserRole(), String.valueOf(Role.Тестировщик))) {
             model.addAttribute("def", (repoDevices.findByStatus(Status.Протестировать).size()));
         }
     }
 
     protected void attributesService(Model model) {
         attributes(model);
-//        List<Devices> temp;
 
         model.addAttribute("devices", repoDevices.findAll());
     }
@@ -92,37 +91,25 @@ public class Global {
         model.addAttribute("deviceTypeSelected", DeviceType.Все);
     }
 
-    protected String checkUserRole() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            Users userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-            return String.valueOf(userFromDB.getRole());
-        }
+    protected String getUserRole() {
+        Users user = getUser();
+        if (user != null) return String.valueOf(user.getRole());
         return "NOT";
     }
 
-    protected Long checkUserID() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            Users userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-            return userFromDB.getId();
-        }
+    protected Long getUserID() {
+        Users user = getUser();
+        if (user != null) return user.getId();
         return 0L;
     }
 
-    protected String checkAvatar() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            Users userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-            return userFromDB.getAvatar();
-        }
+    protected String getAvatar() {
+        Users user = getUser();
+        if (user != null) return user.getAvatar();
         return defAvatar;
     }
 
-    protected Users checkUser() {
+    protected Users getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
@@ -131,13 +118,9 @@ public class Global {
         return null;
     }
 
-    protected String checkUsernameLastname() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            Users temp = repoUsers.findByUsername(userDetail.getUsername());
-            return temp.getUsername() + " " + temp.getLastname();
-        }
+    protected String getUsernameLastname() {
+        Users user = getUser();
+        if (user != null) return user.getUsername() + " " + user.getLastname();
         return "Добро пожаловать";
     }
 
@@ -148,5 +131,4 @@ public class Global {
         temp.addAll(repoUsers.findByRole(Role.Пользователь));
         return temp;
     }
-
 }

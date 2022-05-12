@@ -10,7 +10,7 @@ public class MyDevicesCont extends Global {
     @GetMapping("/myDevices")
     public String allDevice(Model model) {
         attributes(model);
-        model.addAttribute("devices", repoDevices.findByUserId(checkUserID()));
+        model.addAttribute("devices", repoDevices.findByUserId(getUserID()));
         model.addAttribute("serviceable", Status.Исправен);
         return "myDevices";
     }

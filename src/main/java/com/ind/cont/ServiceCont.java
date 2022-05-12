@@ -9,7 +9,7 @@ public class ServiceCont extends Global {
     @GetMapping("/service")
     public String service(Model model) {
         attributesService(model);
-        model.addAttribute("devices",repoDevices.findByServesId(checkUserID()));
+        model.addAttribute("devices",repoDevices.findByServesId(getUserID()));
         return "service";
     }
 }
