@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
@@ -22,7 +24,7 @@ public class AEDCont extends Global {
 
     @GetMapping("/add")
     public String add(Model model) {
-        attributes(model);
+        AddAttributes(model);
         model.addAttribute("types", Arrays.asList(DeviceType.values()));
         model.addAttribute("DeviceTypeAll", DeviceType.Все);
         return "add";
@@ -48,7 +50,7 @@ public class AEDCont extends Global {
                 }
             } catch (IOException e) {
                 model.addAttribute("message", "Слишком большой размер аватарки");
-                attributes(model);
+                AddAttributes(model);
                 model.addAttribute("types", Arrays.asList(DeviceType.values()));
                 model.addAttribute("DeviceTypeAll", DeviceType.Все);
                 return "add";
@@ -75,11 +77,52 @@ public class AEDCont extends Global {
 
     @GetMapping("/device/{id}/edit")
     public String edit(Model model, @PathVariable(value = "id") Long id) {
-        attributes(model);
+        AddAttributes(model);
         model.addAttribute("types", Arrays.asList(DeviceType.values()));
         model.addAttribute("device", repoDevices.findById(id).orElseThrow());
         model.addAttribute("DeviceTypeAll", DeviceType.Все);
         return "edit";
+    }
+
+    @GetMapping("/device/{id}/edit/file")
+    public String EditFile(@PathVariable Long id, Model model) {
+        Devices device = repoDevices.getById(id);
+
+        boolean flag = true;
+        if (device.getFile().equals(defShredder)) flag = false;
+        if (device.getFile().equals(defScanner)) flag = false;
+        if (device.getFile().equals(defServer)) flag = false;
+        if (device.getFile().equals(defPrinter)) flag = false;
+        if (device.getFile().equals(defTablet)) flag = false;
+        if (device.getFile().equals(defLaptop)) flag = false;
+        if (device.getFile().equals(defXerox)) flag = false;
+        if (device.getFile().equals(defMFPs)) flag = false;
+        if (device.getFile().equals(defPc)) flag = false;
+        if (flag) {
+            try {
+                Files.delete(Paths.get(uploadImg + "/" + device.getFile()));
+            } catch (IOException e) {
+                model.addAttribute("message", "Не удалось изменить фотографию");
+                AddAttributesIndex(model);
+                return "add";
+            }
+        }
+
+        switch (device.getDeviceType()) {
+            case ПК -> device.setFile(defPc);
+            case МФУ -> device.setFile(defMFPs);
+            case Ксерокс -> device.setFile(defXerox);
+            case Ноутбук -> device.setFile(defLaptop);
+            case Планшет -> device.setFile(defTablet);
+            case Принтер -> device.setFile(defPrinter);
+            case Сервер -> device.setFile(defServer);
+            case Сканер -> device.setFile(defScanner);
+            case Шредер -> device.setFile(defShredder);
+        }
+
+        repoDevices.save(device);
+
+        return "redirect:/myDevices";
     }
 
     @PostMapping("/device/{id}/edit")
@@ -104,12 +147,35 @@ public class AEDCont extends Global {
                 }
             } catch (IOException e) {
                 model.addAttribute("message", "Слишком большой размер аватарки");
-                attributes(model);
+                AddAttributes(model);
                 model.addAttribute("types", Arrays.asList(DeviceType.values()));
                 model.addAttribute("device", repoDevices.findById(id).orElseThrow());
                 model.addAttribute("DeviceTypeAll", DeviceType.Все);
                 return "edit";
             }
+
+            boolean flag = true;
+
+            if (device.getFile().equals(defShredder)) flag = false;
+            if (device.getFile().equals(defScanner)) flag = false;
+            if (device.getFile().equals(defServer)) flag = false;
+            if (device.getFile().equals(defPrinter)) flag = false;
+            if (device.getFile().equals(defTablet)) flag = false;
+            if (device.getFile().equals(defLaptop)) flag = false;
+            if (device.getFile().equals(defXerox)) flag = false;
+            if (device.getFile().equals(defMFPs)) flag = false;
+            if (device.getFile().equals(defPc)) flag = false;
+
+            if (flag) {
+                try {
+                    Files.delete(Paths.get(uploadImg + "/" + device.getFile()));
+                } catch (IOException e) {
+                    model.addAttribute("message", "Не удалось изменить фотографию");
+                    AddAttributesIndex(model);
+                    return "add";
+                }
+            }
+
             device.setFile(result_poster);
         }
 

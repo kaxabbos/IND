@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexCont extends Global {
     @GetMapping("/index")
     public String index1(Model model) {
-        attributesSearch(model, Status.Все, DeviceType.Все);
+        AddAttributesSearch(model, Status.Все, DeviceType.Все);
         return "index";
     }
 
     @GetMapping("/")
     public String index2(Model model) {
-        attributesSearch(model, Status.Все, DeviceType.Все);
+        AddAttributesSearch(model, Status.Все, DeviceType.Все);
         return "index";
     }
 
     @PostMapping("/search/status_type")
     String searchStatusType(Model model, @RequestParam Status status, @RequestParam DeviceType type) {
-        attributesSearch(model, status, type);
+        AddAttributesSearch(model, status, type);
         return "index";
     }
 
     @PostMapping("/index/search")
     String searchStatusType(Model model, @RequestParam String search) {
-        attributesSearch(model, search);
+        AddAttributesSearch(model, search);
         return "index";
     }
 }

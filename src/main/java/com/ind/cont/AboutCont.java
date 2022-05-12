@@ -9,7 +9,7 @@ public class AboutCont extends Global {
 
     @GetMapping("/about")
     public String about(Model model) {
-        attributes(model);
+        AddAttributes(model);
         return "about";
     }
 

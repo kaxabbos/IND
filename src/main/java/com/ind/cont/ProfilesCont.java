@@ -17,7 +17,7 @@ public class ProfilesCont extends Global {
     public String profiles(Model model) {
         model.addAttribute("usersList", usersList());
         model.addAttribute("roles", Arrays.asList(Role.values()));
-        attributes(model);
+        AddAttributes(model);
         return "profiles";
     }
 
@@ -35,7 +35,7 @@ public class ProfilesCont extends Global {
             model.addAttribute("usersList", usersList());
             model.addAttribute("roles", Arrays.asList(Role.values()));
             model.addAttribute("message", "Вы не можете удалить самого себя");
-            attributes(model);
+            AddAttributes(model);
             return "profiles";
         }
 

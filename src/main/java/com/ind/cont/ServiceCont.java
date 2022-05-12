@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ServiceCont extends Global {
     @GetMapping("/service")
     public String service(Model model) {
-        attributesService(model);
+        AddAttributesService(model);
         model.addAttribute("devices",repoDevices.findByServesId(getUserID()));
         return "service";
     }

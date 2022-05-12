@@ -41,7 +41,7 @@ public class Global {
     protected String defTablet = "default/tablet.png";
     protected String defXerox = "default/xerox.png";
 
-    protected void attributes(Model model) {
+    protected void AddAttributes(Model model) {
         model.addAttribute("avatar", getAvatar());
         model.addAttribute("usernameLastname", getUsernameLastname());
         model.addAttribute("avatar", getAvatar());
@@ -53,15 +53,19 @@ public class Global {
         }
     }
 
-    protected void attributesService(Model model) {
-        attributes(model);
-
+    protected void AddAttributesService(Model model) {
+        AddAttributes(model);
         model.addAttribute("devices", repoDevices.findAll());
     }
 
-    protected void attributesSearch(Model model, Status status, DeviceType type) {
-        attributes(model);
+    protected void AddAttributesIndex(Model model) {
+        AddAttributes(model);
+        model.addAttribute("user", getUser());
+        model.addAttribute("devices", repoDevices.findAll());
+    }
 
+    protected void AddAttributesSearch(Model model, Status status, DeviceType type) {
+        AddAttributes(model);
         List<Devices> temp;
         if (status == Status.Все && type == DeviceType.Все) temp = repoDevices.findAll();
         else if (status == Status.Все) temp = repoDevices.findByDeviceType(type);
@@ -76,12 +80,10 @@ public class Global {
         model.addAttribute("deviceTypeSelected", type);
     }
 
-    protected void attributesSearch(Model model, String search) {
-        attributes(model);
-
+    protected void AddAttributesSearch(Model model, String search) {
+        AddAttributes(model);
         List<Devices> temp = new ArrayList<>();
         for (Devices i : repoDevices.findAll()) if (i.getName().contains(search)) temp.add(i);
-
         model.addAttribute("devices", temp);
         model.addAttribute("test", Status.Протестировать);
         model.addAttribute("unserviceable", Status.Неисправен);
@@ -89,6 +91,14 @@ public class Global {
         model.addAttribute("deviceStatusSelected", Status.Все);
         model.addAttribute("types", DeviceType.values());
         model.addAttribute("deviceTypeSelected", DeviceType.Все);
+    }
+
+    protected List<Users> usersList() {
+        List<Users> temp = repoUsers.findByRole(Role.Администратор);
+        temp.addAll(repoUsers.findByRole(Role.Техник));
+        temp.addAll(repoUsers.findByRole(Role.Тестировщик));
+        temp.addAll(repoUsers.findByRole(Role.Пользователь));
+        return temp;
     }
 
     protected String getUserRole() {
@@ -122,13 +132,5 @@ public class Global {
         Users user = getUser();
         if (user != null) return user.getUsername() + " " + user.getLastname();
         return "Добро пожаловать";
-    }
-
-    protected List<Users> usersList() {
-        List<Users> temp = repoUsers.findByRole(Role.Администратор);
-        temp.addAll(repoUsers.findByRole(Role.Техник));
-        temp.addAll(repoUsers.findByRole(Role.Тестировщик));
-        temp.addAll(repoUsers.findByRole(Role.Пользователь));
-        return temp;
     }
 }

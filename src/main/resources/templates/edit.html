@@ -67,8 +67,10 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit" style="margin-right: 10px;">Изменить</button>
-                    <button class="btn btn-secondary" type="reset">Очистить</button>
+                    <button class="btn btn-primary mr-10px" type="submit">Изменить</button>
+                    <button class="btn btn-secondary mr-10px" type="reset">Очистить</button>
+                    <a th:href="'/device/'+${device.getId()+'/edit/file'}"
+                       class="btn btn-secondary">Сбросить фотографию по умолчанию</a>
                 </form>
             </div>
         </div>

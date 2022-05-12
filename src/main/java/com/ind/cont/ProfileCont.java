@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,7 +20,7 @@ import java.util.UUID;
 public class ProfileCont extends Global {
     @GetMapping("/profile")
     public String profile(Model model) {
-        attributes(model);
+        AddAttributes(model);
         model.addAttribute("user", getUser());
         int allDevice = repoDevices.findByUserId(getUserID()).size();
         int right = (repoDevices.findByUserIdAndStatus(getUserID(), Status.Исправен)).size();
@@ -34,7 +36,7 @@ public class ProfileCont extends Global {
 
         if (!passwordOld.equals(user.getPassword())) {
             model.addAttribute("message", "Некорректный ввод текущего пароля");
-            attributes(model);
+            AddAttributes(model);
             model.addAttribute("user", getUser());
             return "profile";
         }
@@ -42,7 +44,7 @@ public class ProfileCont extends Global {
         if (!password.equals("") && !passwordRepeat.equals("")) {
             if (!password.equals(passwordRepeat)) {
                 model.addAttribute("message", "Новые пароли не совпадают");
-                attributes(model);
+                AddAttributes(model);
                 model.addAttribute("user", getUser());
                 return "profile";
             }
@@ -71,12 +73,21 @@ public class ProfileCont extends Global {
                     avatar.transferTo(new File(uploadImg + "/" + res));
                 }
             } catch (IOException e) {
-                model.addAttribute("message", "Слишком большой размер аватарки");
-                attributes(model);
-                model.addAttribute("user", getUser());
+                model.addAttribute("message", "Не удалось изменить аватарку");
+                AddAttributesIndex(model);
                 return "profile";
             }
             Users user = getUser();
+
+            if (!user.getAvatar().equals(defAvatar)) {
+                try {
+                    Files.delete(Paths.get(uploadImg + "/" + user.getAvatar()));
+                } catch (IOException e) {
+                    model.addAttribute("message", "Не удалось изменить аватарку");
+                    AddAttributesIndex(model);
+                    return "profile";
+                }
+            }
             user.setAvatar(res);
             repoUsers.save(user);
         }
