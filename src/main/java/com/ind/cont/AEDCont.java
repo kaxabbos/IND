@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,9 +23,7 @@ public class AEDCont extends Global {
 
     @GetMapping("/add")
     public String add(Model model) {
-        AddAttributes(model);
-        model.addAttribute("types", Arrays.asList(DeviceType.values()));
-        model.addAttribute("DeviceTypeAll", DeviceType.Все);
+        AddAttributesAdd(model);
         return "add";
     }
 
@@ -50,24 +47,12 @@ public class AEDCont extends Global {
                 }
             } catch (IOException e) {
                 model.addAttribute("message", "Слишком большой размер аватарки");
-                AddAttributes(model);
-                model.addAttribute("types", Arrays.asList(DeviceType.values()));
-                model.addAttribute("DeviceTypeAll", DeviceType.Все);
+                AddAttributesAdd(model);
                 return "add";
             }
             device.setFile(result_poster);
         } else {
-            switch (type) {
-                case ПК -> device.setFile(defPc);
-                case МФУ -> device.setFile(defMFPs);
-                case Ксерокс -> device.setFile(defXerox);
-                case Ноутбук -> device.setFile(defLaptop);
-                case Планшет -> device.setFile(defTablet);
-                case Принтер -> device.setFile(defPrinter);
-                case Сервер -> device.setFile(defServer);
-                case Сканер -> device.setFile(defScanner);
-                case Шредер -> device.setFile(defShredder);
-            }
+            device.setFile(defDevices.get(type));
         }
 
         repoDevices.save(device);
@@ -77,27 +62,23 @@ public class AEDCont extends Global {
 
     @GetMapping("/device/{id}/edit")
     public String edit(Model model, @PathVariable(value = "id") Long id) {
-        AddAttributes(model);
-        model.addAttribute("types", Arrays.asList(DeviceType.values()));
-        model.addAttribute("device", repoDevices.findById(id).orElseThrow());
-        model.addAttribute("DeviceTypeAll", DeviceType.Все);
+        AddAttributesEdit(model, id);
         return "edit";
     }
 
-    @GetMapping("/device/{id}/edit/file")
-    public String EditFile(@PathVariable Long id, Model model) {
+    @GetMapping("/device/{id}/edit/default/file")
+    public String EditDefaultFile(@PathVariable Long id, Model model) {
         Devices device = repoDevices.getById(id);
 
         boolean flag = true;
-        if (device.getFile().equals(defShredder)) flag = false;
-        if (device.getFile().equals(defScanner)) flag = false;
-        if (device.getFile().equals(defServer)) flag = false;
-        if (device.getFile().equals(defPrinter)) flag = false;
-        if (device.getFile().equals(defTablet)) flag = false;
-        if (device.getFile().equals(defLaptop)) flag = false;
-        if (device.getFile().equals(defXerox)) flag = false;
-        if (device.getFile().equals(defMFPs)) flag = false;
-        if (device.getFile().equals(defPc)) flag = false;
+
+        for (String i : defDevices.values()) {
+            if (device.getFile().equals(i)) {
+                flag = false;
+                break;
+            }
+        }
+
         if (flag) {
             try {
                 Files.delete(Paths.get(uploadImg + "/" + device.getFile()));
@@ -108,17 +89,7 @@ public class AEDCont extends Global {
             }
         }
 
-        switch (device.getDeviceType()) {
-            case ПК -> device.setFile(defPc);
-            case МФУ -> device.setFile(defMFPs);
-            case Ксерокс -> device.setFile(defXerox);
-            case Ноутбук -> device.setFile(defLaptop);
-            case Планшет -> device.setFile(defTablet);
-            case Принтер -> device.setFile(defPrinter);
-            case Сервер -> device.setFile(defServer);
-            case Сканер -> device.setFile(defScanner);
-            case Шредер -> device.setFile(defShredder);
-        }
+        device.setFile(defDevices.get(device.getDeviceType()));
 
         repoDevices.save(device);
 
@@ -147,24 +118,18 @@ public class AEDCont extends Global {
                 }
             } catch (IOException e) {
                 model.addAttribute("message", "Слишком большой размер аватарки");
-                AddAttributes(model);
-                model.addAttribute("types", Arrays.asList(DeviceType.values()));
-                model.addAttribute("device", repoDevices.findById(id).orElseThrow());
-                model.addAttribute("DeviceTypeAll", DeviceType.Все);
+                AddAttributesEdit(model, id);
                 return "edit";
             }
 
             boolean flag = true;
 
-            if (device.getFile().equals(defShredder)) flag = false;
-            if (device.getFile().equals(defScanner)) flag = false;
-            if (device.getFile().equals(defServer)) flag = false;
-            if (device.getFile().equals(defPrinter)) flag = false;
-            if (device.getFile().equals(defTablet)) flag = false;
-            if (device.getFile().equals(defLaptop)) flag = false;
-            if (device.getFile().equals(defXerox)) flag = false;
-            if (device.getFile().equals(defMFPs)) flag = false;
-            if (device.getFile().equals(defPc)) flag = false;
+            for (String i : defDevices.values()) {
+                if (device.getFile().equals(i)) {
+                    flag = false;
+                    break;
+                }
+            }
 
             if (flag) {
                 try {
@@ -184,60 +149,9 @@ public class AEDCont extends Global {
         return "redirect:/myDevices";
     }
 
-    @GetMapping("/device/{id}/serviceable")
-    public String serviceableDevice(Model model, @PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Исправен);
-        devices.setServes(null);
-        devices.setServesId(0);
-        repoDevices.save(devices);
-        return "redirect:/service";
-    }
-
-    @GetMapping("/device/{id}/faulty")
-    public String faultyDevice(Model model, @PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Неисправен);
-        devices.setServes(null);
-        devices.setServesId(0);
-        repoDevices.save(devices);
-        return "redirect:/index";
-    }
-
     @GetMapping("/device/{id}/delete")
-    public String deleteDevice(Model model, @PathVariable(value = "id") Long id) {
+    public String deleteDevice(@PathVariable(value = "id") Long id) {
         repoDevices.deleteById(id);
         return "redirect:/myDevices";
     }
-
-    @GetMapping("/device/{id}/repair")
-    public String repairDevice(Model model, @PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Ремонтируется);
-        devices.setServes(getUsernameLastname());
-        devices.setServesId(getUserID());
-        repoDevices.save(devices);
-        return "redirect:/index";
-    }
-
-    @GetMapping("/device/{id}/test")
-    public String testDevice(Model model, @PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Протестировать);
-        devices.setServes(null);
-        devices.setServesId(0);
-        repoDevices.save(devices);
-        return "redirect:/index";
-    }
-
-    @GetMapping("/device/{id}/testing")
-    public String testingDevice(Model model, @PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Тестируется);
-        devices.setServes(getUsernameLastname());
-        devices.setServesId(getUserID());
-        repoDevices.save(devices);
-        return "redirect:/index";
-    }
-
 }

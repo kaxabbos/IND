@@ -28,27 +28,21 @@ public class Global {
     @Value("${upload.img}")
     protected String uploadImg;
 
-//    protected Map<DeviceType, String> defDevices = new HashMap<>();
-//
-//    {
-//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
-//        defDevices.put(DeviceType.МФУ, "default/laptop.png");
-//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
-//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
-//        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
-//    }
+    protected Map<DeviceType, String> defDevices = new HashMap<>();
 
+    {
+        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
+        defDevices.put(DeviceType.МФУ, "default/MFPs.png");
+        defDevices.put(DeviceType.Ксерокс, "default/xerox.png");
+        defDevices.put(DeviceType.ПК, "default/pc.png");
+        defDevices.put(DeviceType.Планшет, "default/tablet.png");
+        defDevices.put(DeviceType.Принтер, "default/printer.png");
+        defDevices.put(DeviceType.Сервер, "default/server.png");
+        defDevices.put(DeviceType.Сканер, "default/scanner.png");
+        defDevices.put(DeviceType.Шредер, "default/shredder.png");
+    }
 
-    protected String defAvatar = "default/avatar.jpeg";
-    protected String defLaptop = "default/laptop.png";
-    protected String defMFPs = "default/MFPs.png";
-    protected String defPc = "default/pc.png";
-    protected String defPrinter = "default/printer.png";
-    protected String defScanner = "default/scanner.png";
-    protected String defServer = "default/server.png";
-    protected String defShredder = "default/shredder.png";
-    protected String defTablet = "default/tablet.png";
-    protected String defXerox = "default/xerox.png";
+    protected String defAvatar = "default/avatar.png";
 
     protected void AddAttributes(Model model) {
         model.addAttribute("avatar", getAvatar());
@@ -65,6 +59,19 @@ public class Global {
     protected void AddAttributesService(Model model) {
         AddAttributes(model);
         model.addAttribute("devices", repoDevices.findAll());
+    }
+
+    protected void AddAttributesAdd(Model model) {
+        AddAttributes(model);
+        model.addAttribute("types", Arrays.asList(DeviceType.values()));
+        model.addAttribute("DeviceTypeAll", DeviceType.Все);
+    }
+
+    protected void AddAttributesEdit(Model model, Long idDevice) {
+        AddAttributes(model);
+        model.addAttribute("types", Arrays.asList(DeviceType.values()));
+        model.addAttribute("device", repoDevices.getById(idDevice));
+        model.addAttribute("DeviceTypeAll", DeviceType.Все);
     }
 
     protected void AddAttributesIndex(Model model) {
