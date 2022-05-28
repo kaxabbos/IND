@@ -1,49 +1,17 @@
-package com.ind.cont;
+package com.ind.cont.general;
 
 import com.ind.models.Devices;
-import com.ind.models.Users;
 import com.ind.models.enums.DeviceType;
 import com.ind.models.enums.Role;
 import com.ind.models.enums.Status;
-import com.ind.repo.RepoDevices;
-import com.ind.repo.RepoUsers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
-public class Global {
-
-    @Autowired
-    protected RepoUsers repoUsers;
-
-    @Autowired
-    protected RepoDevices repoDevices;
-
-    @Value("${upload.img}")
-    protected String uploadImg;
-
-    protected Map<DeviceType, String> defDevices = new HashMap<>();
-
-    {
-        defDevices.put(DeviceType.Ноутбук, "default/laptop.png");
-        defDevices.put(DeviceType.МФУ, "default/MFPs.png");
-        defDevices.put(DeviceType.Ксерокс, "default/xerox.png");
-        defDevices.put(DeviceType.ПК, "default/pc.png");
-        defDevices.put(DeviceType.Планшет, "default/tablet.png");
-        defDevices.put(DeviceType.Принтер, "default/printer.png");
-        defDevices.put(DeviceType.Сервер, "default/server.png");
-        defDevices.put(DeviceType.Сканер, "default/scanner.png");
-        defDevices.put(DeviceType.Шредер, "default/shredder.png");
-    }
-
-    protected String defAvatar = "default/avatar.png";
-
+public class Attributes extends General {
     protected void AddAttributes(Model model) {
         model.addAttribute("avatar", getAvatar());
         model.addAttribute("usernameLastname", getUsernameLastname());
@@ -107,46 +75,5 @@ public class Global {
         model.addAttribute("deviceStatusSelected", Status.Все);
         model.addAttribute("types", DeviceType.values());
         model.addAttribute("deviceTypeSelected", DeviceType.Все);
-    }
-
-    protected List<Users> usersList() {
-        List<Users> temp = repoUsers.findByRole(Role.Администратор);
-        temp.addAll(repoUsers.findByRole(Role.Техник));
-        temp.addAll(repoUsers.findByRole(Role.Тестировщик));
-        temp.addAll(repoUsers.findByRole(Role.Пользователь));
-        return temp;
-    }
-
-    protected String getUserRole() {
-        Users user = getUser();
-        if (user != null) return String.valueOf(user.getRole());
-        return "NOT";
-    }
-
-    protected Long getUserID() {
-        Users user = getUser();
-        if (user != null) return user.getId();
-        return 0L;
-    }
-
-    protected String getAvatar() {
-        Users user = getUser();
-        if (user != null) return user.getAvatar();
-        return defAvatar;
-    }
-
-    protected Users getUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            return repoUsers.findByUsername(userDetail.getUsername());
-        }
-        return null;
-    }
-
-    protected String getUsernameLastname() {
-        Users user = getUser();
-        if (user != null) return user.getUsername() + " " + user.getLastname();
-        return "Добро пожаловать";
     }
 }

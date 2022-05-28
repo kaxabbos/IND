@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface RepoUsers extends JpaRepository<Users, Long> {
     List<Users> findByRole(Role role);
+    List<Users> findAllByOrderByRole();
 
     Users findByUsername(String username);
 

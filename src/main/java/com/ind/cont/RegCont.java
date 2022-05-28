@@ -1,5 +1,6 @@
 package com.ind.cont;
 
+import com.ind.cont.general.Attributes;
 import com.ind.models.Users;
 import com.ind.models.enums.Role;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Objects;
 
 @Controller
-public class RegCont extends Global {
+public class RegCont extends Attributes {
     @GetMapping("/reg")
     public String reg() {
         return "reg";

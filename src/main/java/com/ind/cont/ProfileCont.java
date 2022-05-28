@@ -1,5 +1,6 @@
 package com.ind.cont;
 
+import com.ind.cont.general.Attributes;
 import com.ind.models.Users;
 import com.ind.models.enums.Status;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Controller
-public class ProfileCont extends Global {
+public class ProfileCont extends Attributes {
     @GetMapping("/profile")
     public String profile(Model model) {
         AddAttributes(model);

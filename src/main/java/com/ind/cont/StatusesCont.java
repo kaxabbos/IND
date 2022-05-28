@@ -1,5 +1,6 @@
 package com.ind.cont;
 
+import com.ind.cont.general.Attributes;
 import com.ind.models.Devices;
 import com.ind.models.enums.Status;
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class StatusesCont extends Global {
+public class StatusesCont extends Attributes {
 
     @GetMapping("/device/{id}/serviceable")
     public String serviceableDevice(@PathVariable(value = "id") Long id) {

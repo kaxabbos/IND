@@ -1,5 +1,6 @@
 package com.ind.cont;
 
+import com.ind.cont.general.Attributes;
 import com.ind.models.Devices;
 import com.ind.models.enums.DeviceType;
 import com.ind.models.enums.Status;
@@ -19,7 +20,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Controller
-public class AEDCont extends Global {
+public class AEDDevicesCont extends Attributes {
 
     @GetMapping("/add")
     public String add(Model model) {

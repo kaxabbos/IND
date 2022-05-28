@@ -1,12 +1,13 @@
 package com.ind.cont;
 
+import com.ind.cont.general.Attributes;
 import com.ind.models.enums.Status;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class MyDevicesCont extends Global {
+public class MyDevicesCont extends Attributes {
     @GetMapping("/myDevices")
     public String allDevice(Model model) {
         AddAttributes(model);
