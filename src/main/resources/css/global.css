@@ -1,5 +1,13 @@
 .accent{
-    background: #4167d5;
+    /*background: #4167d5;*/
+}
+
+.button-logout {
+    text-decoration: none;
+    color: white;
+    padding: 0;
+    margin-left: -4px;
+    font-size: 14px;
 }
 
 .mb-5px {
