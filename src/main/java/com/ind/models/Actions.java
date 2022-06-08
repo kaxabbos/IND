@@ -11,19 +11,29 @@ public class Actions {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private Long idUser;
     private String action;
     private String date;
 
     public Actions() {
     }
 
-    public Actions(String action, String date) {
+    public Actions(Long idUser, String action, String date) {
+        this.idUser = idUser;
         this.action = action;
         this.date = date;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
     }
 
     public String getAction() {

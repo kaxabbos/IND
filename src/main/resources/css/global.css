@@ -1,4 +1,4 @@
-.accent{
+.accent {
     /*background: #4167d5;*/
 }
 
@@ -16,6 +16,10 @@
 
 .mxw-100px {
     max-width: 100px;
+}
+
+.mxw-200px {
+    max-width: 200px;
 }
 
 .mxh-40px {

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>IND - Действия</title>
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <nav th:insert="blocks\nav :: nav"
+         class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 accent">
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div th:insert="blocks\navSecond :: navSecond"></div>
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Действия</h3>
+                <div class="row mb-2" th:each="user : ${users}">
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                        <a th:href="${'/actions/' + user.id}" class="form-control" readonly>
+                            <span th:text="${user.role} + ' - ' + ${user.firstname} + ' ' + ${user.lastname}"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:insert="blocks\footer :: footer"
+                class="bg-white d-lg-flex justify-content-lg-center align-items-lg-center sticky-footer mxh-40px">
+        </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+<script src="/js/min.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>

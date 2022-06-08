@@ -29,6 +29,12 @@
                     <span class="fs-16px">Статистика</span>
                 </a>
             </li>
+            <li th:if="${role == 'Администратор'}" class="nav-item">
+                <a class="nav-link" href="/actions">
+                    <i class="fab fa-black-tie fa-fas"></i>
+                    <span class="fs-16px">Действия</span>
+                </a>
+            </li>
             <li th:if="${role == 'Техник' || role == 'Тестировщик'}" class="nav-item">
                 <a class="nav-link" href="/service">
                     <i class="fas fa-table fa-fas"></i>

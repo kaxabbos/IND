@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Attributes extends General {
     protected void AddAttributes(Model model) {
@@ -31,7 +30,18 @@ public class Attributes extends General {
 
     protected void AddAttributesStats(Model model) {
         AddAttributes(model);
-        model.addAttribute("devices",repoDevices.findAll());
+        model.addAttribute("devices", repoDevices.findAll());
+    }
+
+    protected void AddAttributesActionsList(Model model) {
+        AddAttributes(model);
+        model.addAttribute("users", repoUsers.findAllByOrderByRole());
+    }
+
+    protected void AddAttributesActions(Model model, Long idUser) {
+        AddAttributes(model);
+        model.addAttribute("user", repoUsers.getById(idUser));
+        model.addAttribute("actions", repoActions.findAll());
     }
 
     protected void AddAttributesAdd(Model model) {

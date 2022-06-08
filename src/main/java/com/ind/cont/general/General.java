@@ -2,6 +2,7 @@ package com.ind.cont.general;
 
 import com.ind.models.Users;
 import com.ind.models.enums.DeviceType;
+import com.ind.repo.RepoActions;
 import com.ind.repo.RepoDevices;
 import com.ind.repo.RepoUsers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class General {
     @Autowired
     protected RepoUsers repoUsers;
-
     @Autowired
     protected RepoDevices repoDevices;
+    @Autowired
+    protected RepoActions repoActions;
 
     @Value("${upload.img}")
     protected String uploadImg;
@@ -40,6 +43,15 @@ public class General {
 
     protected String defAvatar = "default/avatar.png";
 
+    protected Users getUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            return repoUsers.findByUsername(userDetail.getUsername());
+        }
+        return null;
+    }
+
     protected String getUserRole() {
         Users user = getUser();
         if (user != null) return String.valueOf(user.getRole());
@@ -58,18 +70,13 @@ public class General {
         return defAvatar;
     }
 
-    protected Users getUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            return repoUsers.findByUsername(userDetail.getUsername());
-        }
-        return null;
-    }
-
     protected String getFirstnameLastname() {
         Users user = getUser();
         if (user != null) return user.getFirstname() + " " + user.getLastname();
         return "Добро пожаловать";
+    }
+
+    protected String DateNow() {
+        return LocalDateTime.now().toString().substring(0, 10);
     }
 }
