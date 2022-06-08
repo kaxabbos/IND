@@ -34,7 +34,7 @@ public class StatusesCont extends Attributes {
     public String repairDevice(@PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Ремонтируется);
-        devices.setServes(getUsernameLastname());
+        devices.setServes(getFirstnameLastname());
         devices.setServesId(getUserID());
         repoDevices.save(devices);
         return "redirect:/index";
@@ -54,7 +54,7 @@ public class StatusesCont extends Attributes {
     public String testingDevice(@PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Тестируется);
-        devices.setServes(getUsernameLastname());
+        devices.setServes(getFirstnameLastname());
         devices.setServesId(getUserID());
         repoDevices.save(devices);
         return "redirect:/index";

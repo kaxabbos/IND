@@ -32,7 +32,7 @@ public class ProfileCont extends Attributes {
     }
 
     @PostMapping("/profile/edit")
-    String profileEdit(Model model, @RequestParam String username, @RequestParam String lastname, @RequestParam String email, @RequestParam String passwordOld, @RequestParam String password, @RequestParam String passwordRepeat) {
+    String profileEdit(Model model, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String email, @RequestParam String passwordOld, @RequestParam String password, @RequestParam String passwordRepeat) {
         Users user = getUser();
 
         if (!passwordOld.equals(user.getPassword())) {
@@ -52,7 +52,7 @@ public class ProfileCont extends Attributes {
             user.setPassword(password);
         }
 
-        if (!username.equals("")) user.setUsername(username);
+        if (!firstname.equals("")) user.setFirstname(firstname);
         if (!lastname.equals("")) user.setLastname(lastname);
         if (!email.equals("")) user.setEmail(email);
 

@@ -35,7 +35,7 @@ public class RegCont extends Attributes {
             return "reg";
         }
 
-        repoUsers.save(new Users(username, lastname, email, password, Role.Пользователь, defAvatar));
+        repoUsers.save(new Users(username, username, lastname, email, password, Role.Пользователь, defAvatar));
 
         return "redirect:/login";
     }

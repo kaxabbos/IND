@@ -15,6 +15,8 @@ public class Users implements UserDetails {
     private long Id;
 
     private String username;
+
+    private String firstname;
     private String lastname;
     private String email;
     private String password;
@@ -26,8 +28,9 @@ public class Users implements UserDetails {
     public Users() {
     }
 
-    public Users(String username, String lastname, String email, String password, Role role, String avatar) {
+    public Users(String username, String firstname, String lastname, String email, String password, Role role, String avatar) {
         this.username = username;
+        this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
@@ -45,6 +48,14 @@ public class Users implements UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {

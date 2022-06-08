@@ -30,7 +30,7 @@ public class AEDDevicesCont extends Attributes {
 
     @PostMapping("/device/add")
     public String addDevice(Model model, @RequestParam String name, @RequestParam DeviceType type, @RequestParam String description, @RequestParam MultipartFile file) {
-        Devices device = new Devices(name, type, getUsernameLastname(), getUserID(), Status.Исправен);
+        Devices device = new Devices(name, type, getFirstnameLastname(), getUserID(), Status.Исправен);
 
         if (description == null || description.equals("")) device.setDescription(null);
         else device.setDescription(description);

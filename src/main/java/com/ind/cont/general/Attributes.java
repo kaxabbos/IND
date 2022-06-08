@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Attributes extends General {
     protected void AddAttributes(Model model) {
         model.addAttribute("avatar", getAvatar());
-        model.addAttribute("usernameLastname", getUsernameLastname());
+        model.addAttribute("firstnameLastname", getFirstnameLastname());
         model.addAttribute("avatar", getAvatar());
         model.addAttribute("role", getUserRole());
         if (Objects.equals(getUserRole(), String.valueOf(Role.Техник))) {

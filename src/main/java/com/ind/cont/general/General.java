@@ -67,9 +67,9 @@ public class General {
         return null;
     }
 
-    protected String getUsernameLastname() {
+    protected String getFirstnameLastname() {
         Users user = getUser();
-        if (user != null) return user.getUsername() + " " + user.getLastname();
+        if (user != null) return user.getFirstname() + " " + user.getLastname();
         return "Добро пожаловать";
     }
 }
