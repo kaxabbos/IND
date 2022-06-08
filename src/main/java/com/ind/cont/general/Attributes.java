@@ -17,9 +17,9 @@ public class Attributes extends General {
         model.addAttribute("firstnameLastname", getFirstnameLastname());
         model.addAttribute("avatar", getAvatar());
         model.addAttribute("role", getUserRole());
-        if (Objects.equals(getUserRole(), String.valueOf(Role.Техник))) {
+        if (getUserRole().equals(String.valueOf(Role.Техник))) {
             model.addAttribute("def", (repoDevices.findByStatus(Status.Неисправен).size()));
-        } else if (Objects.equals(getUserRole(), String.valueOf(Role.Тестировщик))) {
+        } else if (getUserRole().equals(String.valueOf(Role.Тестировщик))) {
             model.addAttribute("def", (repoDevices.findByStatus(Status.Протестировать).size()));
         }
     }

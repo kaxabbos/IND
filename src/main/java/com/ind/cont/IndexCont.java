@@ -2,6 +2,7 @@ package com.ind.cont;
 
 import com.ind.cont.general.Attributes;
 import com.ind.models.enums.DeviceType;
+import com.ind.models.enums.Role;
 import com.ind.models.enums.Status;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +14,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexCont extends Attributes {
     @GetMapping("/index")
     public String index1(Model model) {
-        AddAttributesSearch(model, Status.Все, DeviceType.Все);
+        if (getUserRole().equals(String.valueOf(Role.Техник))) {
+            AddAttributesSearch(model, Status.Неисправен, DeviceType.Все);
+        } else if (getUserRole().equals(String.valueOf(Role.Тестировщик))) {
+            AddAttributesSearch(model, Status.Протестировать, DeviceType.Все);
+        } else {
+            AddAttributesSearch(model, Status.Все, DeviceType.Все);
+        }
         return "index";
     }
 
     @GetMapping("/")
     public String index2(Model model) {
-        AddAttributesSearch(model, Status.Все, DeviceType.Все);
+        if (getUserRole().equals(String.valueOf(Role.Техник))) {
+            AddAttributesSearch(model, Status.Неисправен, DeviceType.Все);
+        } else if (getUserRole().equals(String.valueOf(Role.Тестировщик))) {
+            AddAttributesSearch(model, Status.Протестировать, DeviceType.Все);
+        } else {
+            AddAttributesSearch(model, Status.Все, DeviceType.Все);
+        }
         return "index";
     }
 
