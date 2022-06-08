@@ -29,6 +29,11 @@ public class Attributes extends General {
         model.addAttribute("devices", repoDevices.findAll());
     }
 
+    protected void AddAttributesStats(Model model) {
+        AddAttributes(model);
+        model.addAttribute("devices",repoDevices.findAll());
+    }
+
     protected void AddAttributesAdd(Model model) {
         AddAttributes(model);
         model.addAttribute("types", Arrays.asList(DeviceType.values()));

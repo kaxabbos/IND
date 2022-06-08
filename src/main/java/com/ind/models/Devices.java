@@ -21,6 +21,8 @@ public class Devices {
     private Status status;
     private String serves;
     private long servesId;
+    private int repaired;
+    private int testing;
 
     public Devices() {
     }
@@ -31,6 +33,8 @@ public class Devices {
         this.user = user;
         this.userId = userId;
         this.status = status;
+        this.repaired = 0;
+        this.testing = 0;
     }
 
     public long getId() {
@@ -107,5 +111,21 @@ public class Devices {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public int getRepaired() {
+        return repaired;
+    }
+
+    public void setRepaired(int repaired) {
+        this.repaired = repaired;
+    }
+
+    public int getTesting() {
+        return testing;
+    }
+
+    public void setTesting(int testing) {
+        this.testing = testing;
     }
 }

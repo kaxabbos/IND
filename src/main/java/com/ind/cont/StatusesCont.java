@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class StatusesCont extends Attributes {
 
     @GetMapping("/device/{id}/serviceable")
-    public String serviceableDevice(@PathVariable(value = "id") Long id) {
+    public String ServiceableDevice(@PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
+        if (devices.getStatus() == Status.Ремонтируется) {
+            devices.setRepaired(devices.getRepaired() + 1);
+        } else {
+            devices.setTesting(devices.getTesting() + 1);
+        }
         devices.setStatus(Status.Исправен);
         devices.setServes(null);
         devices.setServesId(0);
@@ -21,7 +26,7 @@ public class StatusesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/faulty")
-    public String faultyDevice(@PathVariable(value = "id") Long id) {
+    public String FaultyDevice(@PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Неисправен);
         devices.setServes(null);
@@ -31,7 +36,7 @@ public class StatusesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/repair")
-    public String repairDevice(@PathVariable(value = "id") Long id) {
+    public String RepairDevice(@PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Ремонтируется);
         devices.setServes(getFirstnameLastname());
@@ -41,7 +46,7 @@ public class StatusesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/test")
-    public String testDevice(@PathVariable(value = "id") Long id) {
+    public String TestDevice(@PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Протестировать);
         devices.setServes(null);
@@ -50,8 +55,8 @@ public class StatusesCont extends Attributes {
         return "redirect:/index";
     }
 
-    @GetMapping("/device/{id}/testing")
-    public String testingDevice(@PathVariable(value = "id") Long id) {
+    @GetMapping("/device/{id}/tested")
+    public String TestedDevice(@PathVariable(value = "id") Long id) {
         Devices devices = repoDevices.findById(id).orElseThrow();
         devices.setStatus(Status.Тестируется);
         devices.setServes(getFirstnameLastname());

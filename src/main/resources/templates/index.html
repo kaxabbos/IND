@@ -66,7 +66,7 @@
                            th:href="'/device/' + ${device.id} + '/repair'"
                            class="btn btn-primary device-attributes-button">Ремонтировать</a>
                         <a th:if="${device.status == test && role == 'Тестировщик'}"
-                           th:href="'/device/' + ${device.id} + '/testing'"
+                           th:href="'/device/' + ${device.id} + '/tested'"
                            class="btn btn-primary device-attributes-button">Тестировать</a>
                     </div>
                 </div>
