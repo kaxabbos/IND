@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class IndexCont extends Attributes {
     @GetMapping("/index")
-    public String index1(Model model) {
+    public String Index1(Model model) {
         if (getUserRole().equals(String.valueOf(Role.Техник))) {
             AddAttributesSearch(model, Status.Неисправен, DeviceType.Все);
         } else if (getUserRole().equals(String.valueOf(Role.Тестировщик))) {
@@ -25,7 +25,7 @@ public class IndexCont extends Attributes {
     }
 
     @GetMapping("/")
-    public String index2(Model model) {
+    public String Index2(Model model) {
         if (getUserRole().equals(String.valueOf(Role.Техник))) {
             AddAttributesSearch(model, Status.Неисправен, DeviceType.Все);
         } else if (getUserRole().equals(String.valueOf(Role.Тестировщик))) {
@@ -37,13 +37,13 @@ public class IndexCont extends Attributes {
     }
 
     @PostMapping("/search/status_type")
-    String searchStatusType(Model model, @RequestParam Status status, @RequestParam DeviceType type) {
+    String SearchStatusType(Model model, @RequestParam Status status, @RequestParam DeviceType type) {
         AddAttributesSearch(model, status, type);
         return "index";
     }
 
     @PostMapping("/index/search")
-    String searchStatusType(Model model, @RequestParam String search) {
+    String SearchStatusType(Model model, @RequestParam String search) {
         AddAttributesSearch(model, search);
         return "index";
     }

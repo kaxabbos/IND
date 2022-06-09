@@ -2,7 +2,6 @@ package com.ind.cont;
 
 import com.ind.cont.general.Attributes;
 import com.ind.models.Users;
-import com.ind.models.enums.Status;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,32 +20,24 @@ import java.util.UUID;
 public class ProfileCont extends Attributes {
     @GetMapping("/profile")
     public String profile(Model model) {
-        AddAttributes(model);
-        model.addAttribute("user", getUser());
-        int allDevice = repoDevices.findByUserId(getUserID()).size();
-        int right = (repoDevices.findByUserIdAndStatus(getUserID(), Status.Исправен)).size();
-        model.addAttribute("allDevice", allDevice);
-        model.addAttribute("right", right);
-        model.addAttribute("left", allDevice - right);
+        AddAttributesProfile(model);
         return "profile";
     }
 
     @PostMapping("/profile/edit")
-    String profileEdit(Model model, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String email, @RequestParam String passwordOld, @RequestParam String password, @RequestParam String passwordRepeat) {
+    String ProfileEdit(Model model, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String email, @RequestParam String passwordOld, @RequestParam String password, @RequestParam String passwordRepeat) {
         Users user = getUser();
 
         if (!passwordOld.equals(user.getPassword())) {
+            AddAttributesProfile(model);
             model.addAttribute("message", "Некорректный ввод текущего пароля");
-            AddAttributes(model);
-            model.addAttribute("user", getUser());
             return "profile";
         }
 
         if (!password.equals("") && !passwordRepeat.equals("")) {
             if (!password.equals(passwordRepeat)) {
+                AddAttributesProfile(model);
                 model.addAttribute("message", "Новые пароли не совпадают");
-                AddAttributes(model);
-                model.addAttribute("user", getUser());
                 return "profile";
             }
             user.setPassword(password);
@@ -57,11 +48,12 @@ public class ProfileCont extends Attributes {
         if (!email.equals("")) user.setEmail(email);
 
         repoUsers.save(user);
+        AddAction("Изменение профиля");
         return "redirect:/profile";
     }
 
     @PostMapping("/profile/changeAvatar")
-    String changeAvatar(Model model, @RequestParam("avatar") MultipartFile avatar) {
+    String ChangeAvatar(Model model, @RequestParam("avatar") MultipartFile avatar) {
         if (avatar != null && !Objects.requireNonNull(avatar.getOriginalFilename()).isEmpty()) {
             String uuidFile = UUID.randomUUID().toString();
             boolean createDir = true;
@@ -74,8 +66,8 @@ public class ProfileCont extends Attributes {
                     avatar.transferTo(new File(uploadImg + "/" + res));
                 }
             } catch (IOException e) {
+                AddAttributesProfile(model);
                 model.addAttribute("message", "Не удалось изменить аватарку");
-                AddAttributesIndex(model);
                 return "profile";
             }
             Users user = getUser();
@@ -84,8 +76,8 @@ public class ProfileCont extends Attributes {
                 try {
                     Files.delete(Paths.get(uploadImg + "/" + user.getAvatar()));
                 } catch (IOException e) {
+                    AddAttributesProfile(model);
                     model.addAttribute("message", "Не удалось изменить аватарку");
-                    AddAttributesIndex(model);
                     return "profile";
                 }
             }
@@ -93,7 +85,8 @@ public class ProfileCont extends Attributes {
             repoUsers.save(user);
         }
 
+        AddAction("Изменение фотографии профиля");
+
         return "redirect:/profile";
     }
-
 }

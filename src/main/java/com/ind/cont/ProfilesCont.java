@@ -10,15 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
-
 @Controller
 public class ProfilesCont extends Attributes {
     @GetMapping("/profiles")
     public String profiles(Model model) {
-        model.addAttribute("usersList", repoUsers.findAllByOrderByRole());
-        model.addAttribute("roles", Arrays.asList(Role.values()));
-        AddAttributes(model);
+        AddAttributesProfiles(model);
         return "profiles";
     }
 
@@ -27,20 +23,22 @@ public class ProfilesCont extends Attributes {
         Users user = repoUsers.getById(id);
         user.setRole(role);
         repoUsers.save(user);
+        AddAction("Отредактирован пользователь: " + user.getFirstname() + " " + user.getLastname());
         return "redirect:/profiles";
     }
 
     @PostMapping("/profiles/{id}/delete")
     public String profileDelete(Model model, @PathVariable(value = "id") Long id) {
         if (id == getUser().getId()) {
-            model.addAttribute("usersList", repoUsers.findAllByOrderByRole());
-            model.addAttribute("roles", Arrays.asList(Role.values()));
             model.addAttribute("message", "Вы не можете удалить самого себя");
-            AddAttributes(model);
+            AddAttributesProfiles(model);
             return "profiles";
         }
 
-        repoUsers.deleteById(id);
+        Users user = repoUsers.getById(id);
+        repoUsers.delete(user);
+
+        AddAction("Пользователь удален: " + user.getFirstname() + " " + user.getLastname());
         return "redirect:/profiles";
     }
 }

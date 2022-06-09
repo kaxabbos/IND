@@ -57,7 +57,7 @@ public class AEDDevicesCont extends Attributes {
         }
 
         repoDevices.save(device);
-
+        AddAction("Добавлено новое устройство: " + device.getName());
         return "redirect:/myDevices";
     }
 
@@ -85,8 +85,8 @@ public class AEDDevicesCont extends Attributes {
                 Files.delete(Paths.get(uploadImg + "/" + device.getFile()));
             } catch (IOException e) {
                 model.addAttribute("message", "Не удалось изменить фотографию");
-                AddAttributesIndex(model);
-                return "add";
+                AddAttributesEdit(model, id);
+                return "edit";
             }
         }
 
@@ -94,13 +94,14 @@ public class AEDDevicesCont extends Attributes {
 
         repoDevices.save(device);
 
+        AddAction("Сброс фотографии по умолчанию устройства: " + device.getName());
+
         return "redirect:/myDevices";
     }
 
     @PostMapping("/device/{id}/edit")
     public String editDevice(Model model, @PathVariable(value = "id") Long id, @RequestParam String name, @RequestParam DeviceType type, @RequestParam String description, @RequestParam MultipartFile file) {
         Devices device = repoDevices.findById(id).orElseThrow();
-
         device.setName(name);
         device.setDeviceType(type);
         if (description == null || description.equals("")) device.setDescription(null);
@@ -137,22 +138,23 @@ public class AEDDevicesCont extends Attributes {
                     Files.delete(Paths.get(uploadImg + "/" + device.getFile()));
                 } catch (IOException e) {
                     model.addAttribute("message", "Не удалось изменить фотографию");
-                    AddAttributesIndex(model);
+                    AddAttributesAdd(model);
                     return "add";
                 }
             }
-
             device.setFile(result_poster);
         }
 
         repoDevices.save(device);
-
+        AddAction("Отредактирование устройства: " + device.getName());
         return "redirect:/myDevices";
     }
 
     @GetMapping("/device/{id}/delete")
     public String deleteDevice(@PathVariable(value = "id") Long id) {
-        repoDevices.deleteById(id);
+        Devices device = repoDevices.getById(id);
+        repoDevices.delete(device);
+        AddAction("Устройство удалено: " + device.getName());
         return "redirect:/myDevices";
     }
 }

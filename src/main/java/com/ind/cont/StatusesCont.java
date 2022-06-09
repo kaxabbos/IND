@@ -12,57 +12,61 @@ public class StatusesCont extends Attributes {
 
     @GetMapping("/device/{id}/serviceable")
     public String ServiceableDevice(@PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        if (devices.getStatus() == Status.Ремонтируется) {
-            devices.setRepaired(devices.getRepaired() + 1);
+        Devices device = repoDevices.findById(id).orElseThrow();
+        if (device.getStatus() == Status.Ремонтируется) {
+            device.setRepaired(device.getRepaired() + 1);
         } else {
-            devices.setTesting(devices.getTesting() + 1);
+            device.setTesting(device.getTesting() + 1);
         }
-        devices.setStatus(Status.Исправен);
-        devices.setServes(null);
-        devices.setServesId(0);
-        repoDevices.save(devices);
+        device.setStatus(Status.Исправен);
+        device.setServes(null);
+        device.setServesId(0);
+        repoDevices.save(device);
+        AddAction("Изменение статуса устройства \"" + device.getName() + "\" на: " + device.getStatus());
         return "redirect:/service";
     }
 
     @GetMapping("/device/{id}/faulty")
     public String FaultyDevice(@PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Неисправен);
-        devices.setServes(null);
-        devices.setServesId(0);
-        repoDevices.save(devices);
+        Devices device = repoDevices.findById(id).orElseThrow();
+        device.setStatus(Status.Неисправен);
+        device.setServes(null);
+        device.setServesId(0);
+        repoDevices.save(device);
+        AddAction("Изменение статуса устройства \"" + device.getName() + "\" на: " + device.getStatus());
         return "redirect:/index";
     }
 
     @GetMapping("/device/{id}/repair")
     public String RepairDevice(@PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Ремонтируется);
-        devices.setServes(getFirstnameLastname());
-        devices.setServesId(getUserID());
-        repoDevices.save(devices);
+        Devices device = repoDevices.findById(id).orElseThrow();
+        device.setStatus(Status.Ремонтируется);
+        device.setServes(getFirstnameLastname());
+        device.setServesId(getUserID());
+        repoDevices.save(device);
+        AddAction("Изменение статуса устройства \"" + device.getName() + "\" на: " + device.getStatus());
         return "redirect:/index";
     }
 
     @GetMapping("/device/{id}/test")
     public String TestDevice(@PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Протестировать);
-        devices.setServes(null);
-        devices.setServesId(0);
-        repoDevices.save(devices);
+        Devices device = repoDevices.findById(id).orElseThrow();
+        device.setStatus(Status.Протестировать);
+        device.setServes(null);
+        device.setServesId(0);
+        repoDevices.save(device);
+        AddAction("Изменение статуса устройства \"" + device.getName() + "\" на: " + device.getStatus());
         return "redirect:/index";
     }
 
     @GetMapping("/device/{id}/tested")
     public String TestedDevice(@PathVariable(value = "id") Long id) {
-        Devices devices = repoDevices.findById(id).orElseThrow();
-        devices.setStatus(Status.Тестируется);
-        devices.setServes(getFirstnameLastname());
-        devices.setServesId(getUserID());
-        repoDevices.save(devices);
+        Devices device = repoDevices.findById(id).orElseThrow();
+        device.setStatus(Status.Тестируется);
+        device.setServes(getFirstnameLastname());
+        device.setServesId(getUserID());
+        repoDevices.save(device);
+        AddAction("Изменение статуса устройства \"" + device.getName() + "\" на: " + device.getStatus());
         return "redirect:/index";
     }
-
 }

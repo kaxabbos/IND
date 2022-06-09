@@ -18,24 +18,20 @@
             <div class="container-fluid">
                 <h3 th:text="'Действия ' + ${user.firstname} + ' ' + ${user.lastname} + ' - ' + ${user.role}"
                     class="text-dark mb-4"></h3>
-                <div class="row mb-5px">
+                <div class="row mb-2">
                     <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <label class="col-form-label text-dark">
-                            <strong>Действие</strong><br/>
-                        </label>
+                        <strong class="text-dark">Действие</strong>
                     </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center mxw-200px">
-                        <label class="col-form-label text-dark">
-                            <strong>Дата</strong>
-                        </label>
+                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center mxw-250px">
+                        <strong class="text-dark">Дата</strong>
                     </div>
                 </div>
-                <div class="row mb-2" th:each="action : ${actions}">
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <span th:text="${action.action}"></span>
+                <div class="row mb-5px" th:each="action : ${actions}">
+                    <div class="col">
+                        <input th:placeholder="${action.action}" type="text" class="form-control" readonly/>
                     </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center mxw-200px">
-                        <span th:text="${action.date}"></span>
+                    <div class="col mxw-250px">
+                        <input th:placeholder="${action.date}" type="text" class="form-control" readonly/>
                     </div>
                 </div>
             </div>

@@ -17,6 +17,31 @@
             <div th:insert="blocks\navSecond :: navSecond"></div>
             <div class="container-fluid">
                 <h3 class="text-dark mb-4">Статистика</h3>
+                <form action="/stats/search/status_type" method="post" style="margin-bottom: 20px;">
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select" name="status">
+                                <option th:each="status : ${statuses}"
+                                        th:value="${status}"
+                                        th:label="${status}"
+                                        th:selected="${status == deviceStatusSelected}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" name="type">
+                                <option th:each="type : ${types}"
+                                        th:value="${type}"
+                                        th:label="${type}"
+                                        th:selected="${type == deviceTypeSelected}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col mxw-100px">
+                            <button class="btn btn-primary" type="submit">Поиск</button>
+                        </div>
+                    </div>
+                </form>
                 <div class="row mb-5px text-center">
                     <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
                         <label class="col-form-label text-dark">

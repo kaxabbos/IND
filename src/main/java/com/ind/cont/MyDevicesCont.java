@@ -1,7 +1,6 @@
 package com.ind.cont;
 
 import com.ind.cont.general.Attributes;
-import com.ind.models.enums.Status;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MyDevicesCont extends Attributes {
     @GetMapping("/myDevices")
-    public String allDevice(Model model) {
-        AddAttributes(model);
-        model.addAttribute("devices", repoDevices.findByUserId(getUserID()));
-        model.addAttribute("serviceable", Status.Исправен);
+    public String MyDevice(Model model) {
+        AddAttributesMyDevices(model);
         return "myDevices";
     }
 }

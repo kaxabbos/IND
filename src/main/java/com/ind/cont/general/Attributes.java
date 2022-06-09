@@ -23,14 +23,39 @@ public class Attributes extends General {
         }
     }
 
+    protected void AddAttributesProfile(Model model) {
+        AddAttributes(model);
+        model.addAttribute("user", getUser());
+        int allDevice = repoDevices.findByUserId(getUserID()).size();
+        int right = (repoDevices.findByUserIdAndStatus(getUserID(), Status.Исправен)).size();
+        model.addAttribute("allDevice", allDevice);
+        model.addAttribute("right", right);
+        model.addAttribute("left", allDevice - right);
+    }
+
+    protected void AddAttributesProfiles(Model model) {
+        AddAttributes(model);
+        model.addAttribute("usersList", repoUsers.findAllByOrderByRole());
+        model.addAttribute("roles", Arrays.asList(Role.values()));
+    }
+
     protected void AddAttributesService(Model model) {
         AddAttributes(model);
         model.addAttribute("devices", repoDevices.findAll());
     }
 
-    protected void AddAttributesStats(Model model) {
+    protected void AddAttributesStats(Model model, Status status, DeviceType type) {
         AddAttributes(model);
-        model.addAttribute("devices", repoDevices.findAll());
+        List<Devices> devices;
+        if (status == Status.Все && type == DeviceType.Все) devices = repoDevices.findAll();
+        else if (status == Status.Все) devices = repoDevices.findByDeviceType(type);
+        else if (type == DeviceType.Все) devices = repoDevices.findByStatus(status);
+        else devices = repoDevices.findByStatusAndDeviceType(status, type);
+        model.addAttribute("devices", devices);
+        model.addAttribute("statuses", Status.values());
+        model.addAttribute("types", DeviceType.values());
+        model.addAttribute("deviceStatusSelected", status);
+        model.addAttribute("deviceTypeSelected", type);
     }
 
     protected void AddAttributesActionsList(Model model) {
@@ -41,7 +66,7 @@ public class Attributes extends General {
     protected void AddAttributesActions(Model model, Long idUser) {
         AddAttributes(model);
         model.addAttribute("user", repoUsers.getById(idUser));
-        model.addAttribute("actions", repoActions.findAll());
+        model.addAttribute("actions", repoActions.findByIdUser(idUser));
     }
 
     protected void AddAttributesAdd(Model model) {
@@ -63,19 +88,25 @@ public class Attributes extends General {
         model.addAttribute("devices", repoDevices.findAll());
     }
 
+    protected void AddAttributesMyDevices(Model model) {
+        AddAttributes(model);
+        model.addAttribute("devices", repoDevices.findByUserId(getUserID()));
+        model.addAttribute("serviceable", Status.Исправен);
+    }
+
     protected void AddAttributesSearch(Model model, Status status, DeviceType type) {
         AddAttributes(model);
-        List<Devices> temp;
-        if (status == Status.Все && type == DeviceType.Все) temp = repoDevices.findAll();
-        else if (status == Status.Все) temp = repoDevices.findByDeviceType(type);
-        else if (type == DeviceType.Все) temp = repoDevices.findByStatus(status);
-        else temp = repoDevices.findByStatusAndDeviceType(status, type);
-        model.addAttribute("devices", temp);
+        List<Devices> devices;
+        if (status == Status.Все && type == DeviceType.Все) devices = repoDevices.findAll();
+        else if (status == Status.Все) devices = repoDevices.findByDeviceType(type);
+        else if (type == DeviceType.Все) devices = repoDevices.findByStatus(status);
+        else devices = repoDevices.findByStatusAndDeviceType(status, type);
+        model.addAttribute("devices", devices);
         model.addAttribute("test", Status.Протестировать);
         model.addAttribute("unserviceable", Status.Неисправен);
         model.addAttribute("statuses", Status.values());
-        model.addAttribute("deviceStatusSelected", status);
         model.addAttribute("types", DeviceType.values());
+        model.addAttribute("deviceStatusSelected", status);
         model.addAttribute("deviceTypeSelected", type);
     }
 
