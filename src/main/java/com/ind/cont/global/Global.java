@@ -1,4 +1,4 @@
-package com.ind.cont.general;
+package com.ind.cont.global;
 
 import com.ind.models.Actions;
 import com.ind.models.Users;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class General {
+public class Global {
     @Autowired
     protected RepoUsers repoUsers;
     @Autowired

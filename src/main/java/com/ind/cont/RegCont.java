@@ -1,6 +1,6 @@
 package com.ind.cont;
 
-import com.ind.cont.general.Attributes;
+import com.ind.cont.global.Attributes;
 import com.ind.models.Users;
 import com.ind.models.enums.Role;
 import org.springframework.stereotype.Controller;

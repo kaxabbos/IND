@@ -1,8 +1,9 @@
-package com.ind.cont.general;
+package com.ind.cont.global;
 
 import com.ind.models.Devices;
 import com.ind.models.enums.DeviceType;
 import com.ind.models.enums.Role;
+import com.ind.models.enums.Select;
 import com.ind.models.enums.Status;
 import org.springframework.ui.Model;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Attributes extends General {
+public class Attributes extends Global {
     protected void AddAttributes(Model model) {
         model.addAttribute("avatar", getAvatar());
         model.addAttribute("firstnameLastname", getFirstnameLastname());
@@ -44,18 +45,26 @@ public class Attributes extends General {
         model.addAttribute("devices", repoDevices.findAll());
     }
 
-    protected void AddAttributesStats(Model model, Status status, DeviceType type) {
+    protected void AddAttributesStats(Model model, Select select, Status status, DeviceType type, Role role) {
         AddAttributes(model);
-        List<Devices> devices;
-        if (status == Status.Все && type == DeviceType.Все) devices = repoDevices.findAll();
-        else if (status == Status.Все) devices = repoDevices.findByDeviceType(type);
-        else if (type == DeviceType.Все) devices = repoDevices.findByStatus(status);
-        else devices = repoDevices.findByStatusAndDeviceType(status, type);
-        model.addAttribute("devices", devices);
+        if (select == Select.Оргтехника) {
+            List<Devices> devices;
+            if (status == Status.Все && type == DeviceType.Все) devices = repoDevices.findAll();
+            else if (status == Status.Все) devices = repoDevices.findByDeviceType(type);
+            else if (type == DeviceType.Все) devices = repoDevices.findByStatus(status);
+            else devices = repoDevices.findByStatusAndDeviceType(status, type);
+            model.addAttribute("devices", devices);
+        } else {
+            model.addAttribute("users", repoUsers.findByRole(role));
+        }
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("selects", Select.values());
         model.addAttribute("statuses", Status.values());
         model.addAttribute("types", DeviceType.values());
+        model.addAttribute("roleSelected", role);
         model.addAttribute("deviceStatusSelected", status);
         model.addAttribute("deviceTypeSelected", type);
+        model.addAttribute("selectSelected", select);
     }
 
     protected void AddAttributesActionsList(Model model) {

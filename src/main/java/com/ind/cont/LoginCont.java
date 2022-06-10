@@ -1,6 +1,6 @@
 package com.ind.cont;
 
-import com.ind.cont.general.Attributes;
+import com.ind.cont.global.Attributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

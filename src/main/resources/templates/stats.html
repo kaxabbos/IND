@@ -7,6 +7,25 @@
 
 <head th:insert="blocks\head :: head"></head>
 
+<script>
+    function showDiv(elem) {
+        if (elem.value === 'Оргтехника') {
+            document.getElementById('Equipment').style.display = "Block";
+            document.getElementById('Workers').style.display = "None";
+        }
+        if (elem.value === 'Работники') {
+            document.getElementById('Equipment').style.display = "None";
+            document.getElementById('Workers').style.display = "Block";
+        }
+    }
+</script>
+
+<style>
+    #Workers {
+        display: None;
+    }
+</style>
+
 <body id="page-top">
 <div id="wrapper">
     <nav th:insert="blocks\nav :: nav"
@@ -17,73 +36,137 @@
             <div th:insert="blocks\navSecond :: navSecond"></div>
             <div class="container-fluid">
                 <h3 class="text-dark mb-4">Статистика</h3>
-                <form action="/stats/search/status_type" method="post" style="margin-bottom: 20px;">
-                    <div class="row">
+                <form action="/stats/search/status_type" method="post" class="mb-20px">
+                    <div class="row mb-2">
                         <div class="col">
-                            <select class="form-select" name="status">
-                                <option th:each="status : ${statuses}"
-                                        th:value="${status}"
-                                        th:label="${status}"
-                                        th:selected="${status == deviceStatusSelected}">
+                            <select class="form-select" name="select" onchange="showDiv(this)">
+                                <option th:selected="${'Оргтехника' == selectSelected}"
+                                        value="Оргтехника">Оргтехника
+                                </option>
+                                <option th:selected="${'Работники' == selectSelected}"
+                                        value="Работники">Работники
                                 </option>
                             </select>
                         </div>
-                        <div class="col">
-                            <select class="form-select" name="type">
-                                <option th:each="type : ${types}"
-                                        th:value="${type}"
-                                        th:label="${type}"
-                                        th:selected="${type == deviceTypeSelected}">
-                                </option>
-                            </select>
+                    </div>
+                    <div id="Equipment">
+
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-select" name="status">
+                                    <option th:each="status : ${statuses}"
+                                            th:value="${status}"
+                                            th:label="${status}"
+                                            th:selected="${status == deviceStatusSelected}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" name="type">
+                                    <option th:each="type : ${types}"
+                                            th:value="${type}"
+                                            th:label="${type}"
+                                            th:selected="${type == deviceTypeSelected}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col mxw-100px">
+                                <button class="btn btn-primary" type="submit">Поиск</button>
+                            </div>
                         </div>
-                        <div class="col mxw-100px">
-                            <button class="btn btn-primary" type="submit">Поиск</button>
+                    </div>
+                    <div id="Workers">
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-select" name="role">
+                                    <option th:each="rol : ${roles}"
+                                            th:value="${rol}"
+                                            th:label="${rol}"
+                                            th:selected="${rol == roleSelected}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col mxw-100px">
+                                <button class="btn btn-primary" type="submit">Поиск</button>
+                            </div>
                         </div>
                     </div>
                 </form>
-                <div class="row mb-5px text-center">
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <label class="col-form-label text-dark">
-                            <strong>Название</strong><br/>
-                        </label>
+                <div th:if="${devices != null}">
+                    <div class="row mb-5px text-center">
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Название</strong><br/>
+                            </label>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Тип</strong>
+                            </label>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Статус</strong>
+                            </label>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Количество починок</strong>
+                            </label>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Количество тестировок</strong>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <label class="col-form-label text-dark">
-                            <strong>Тип</strong>
-                        </label>
-                    </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <label class="col-form-label text-dark">
-                            <strong>Статус</strong>
-                        </label>
-                    </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <label class="col-form-label text-dark">
-                            <strong>Количество починок</strong>
-                        </label>
-                    </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <label class="col-form-label text-dark">
-                            <strong>Количество тестировок</strong>
-                        </label>
+                    <div class="row mb-5px" th:each="device : ${devices}">
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${device.name}" type="text" class="form-control" readonly/>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${device.deviceType}" type="text" class="form-control" readonly/>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${device.status}" type="text" class="form-control" readonly/>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${device.repaired}" type="text" class="form-control" readonly/>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${device.testing}" type="text" class="form-control" readonly/>
+                        </div>
                     </div>
                 </div>
-                <div class="row mb-5px" th:each="device : ${devices}">
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <input th:placeholder="${device.name}" type="text" class="form-control" readonly/>
+                <div th:if="${users != null}">
+                    <div class="row mb-5px text-center">
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Имя</strong><br/>
+                            </label>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Фамилия</strong>
+                            </label>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Роль</strong>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <input th:placeholder="${device.deviceType}" type="text" class="form-control" readonly/>
-                    </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <input th:placeholder="${device.status}" type="text" class="form-control" readonly/>
-                    </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <input th:placeholder="${device.repaired}" type="text" class="form-control" readonly/>
-                    </div>
-                    <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
-                        <input th:placeholder="${device.testing}" type="text" class="form-control" readonly/>
+                    <div class="row mb-5px" th:each="user : ${users}">
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${user.firstname}" type="text" class="form-control" readonly/>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${user.lastname}" type="text" class="form-control" readonly/>
+                        </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${user.role}" type="text" class="form-control" readonly/>
+                        </div>
+
                     </div>
                 </div>
             </div>
