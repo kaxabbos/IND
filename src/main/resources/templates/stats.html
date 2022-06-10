@@ -152,6 +152,11 @@
                                 <strong>Роль</strong>
                             </label>
                         </div>
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <label class="col-form-label text-dark">
+                                <strong>Отремонтировано | проверено</strong>
+                            </label>
+                        </div>
                     </div>
                     <div class="row mb-5px" th:each="user : ${users}">
                         <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
@@ -163,7 +168,9 @@
                         <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
                             <input th:placeholder="${user.role}" type="text" class="form-control" readonly/>
                         </div>
-
+                        <div class="col d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <input th:placeholder="${user.quantityWorks}" type="text" class="form-control" readonly/>
+                        </div>
                     </div>
                 </div>
             </div>

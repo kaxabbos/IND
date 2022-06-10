@@ -21,6 +21,7 @@ public class Users implements UserDetails {
     private String email;
     private String password;
     private String avatar;
+    private int quantityWorks;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -36,6 +37,7 @@ public class Users implements UserDetails {
         this.password = password;
         this.role = role;
         this.avatar = avatar;
+        this.quantityWorks = 0;
     }
 
     public long getId() {
@@ -96,6 +98,14 @@ public class Users implements UserDetails {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public int getQuantityWorks() {
+        return quantityWorks;
+    }
+
+    public void setQuantityWorks(int quantityWorks) {
+        this.quantityWorks = quantityWorks;
     }
 
     @Override
