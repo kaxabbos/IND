@@ -39,11 +39,11 @@
                 <form action="/stats/search/status_type" method="post" class="mb-20px">
                     <div class="row mb-2">
                         <div class="col">
-                            <select class="form-select" name="select" onchange="showDiv(this)">
+                            <select id="select" class="form-select" name="select" onchange="showDiv(this)">
                                 <option th:each="select : ${selects}"
                                         th:value="${select.name()}"
                                         th:label="${select.name()}">
-<!--                                        th:selected="${select == selectSelected}">-->
+                                    <!--th:selected="${select == selectSelected}">-->
                                 </option>
                             </select>
                         </div>
@@ -77,11 +77,10 @@
                         <div class="row">
                             <div class="col">
                                 <select class="form-select" name="role">
-                                    <option th:each="rol : ${roles}"
-                                            th:value="${rol}"
-                                            th:label="${rol}"
-                                            th:selected="${rol == roleSelected}">
-                                    </option>
+                                    <option value="Техник" label="Техник"
+                                            th:selected="${roleSelected.name() == 'Техник'}"></option>
+                                    <option value="Тестировщик" label="Тестировщик"
+                                            th:selected="${roleSelected.name() == 'Тестировщик'}"></option>
                                 </select>
                             </div>
                             <div class="col mxw-100px">
