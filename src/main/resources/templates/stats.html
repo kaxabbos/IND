@@ -40,17 +40,15 @@
                     <div class="row mb-2">
                         <div class="col">
                             <select class="form-select" name="select" onchange="showDiv(this)">
-                                <option th:selected="${'Оргтехника' == selectSelected}"
-                                        value="Оргтехника">Оргтехника
-                                </option>
-                                <option th:selected="${'Работники' == selectSelected}"
-                                        value="Работники">Работники
+                                <option th:each="select : ${selects}"
+                                        th:value="${select.name()}"
+                                        th:label="${select.name()}">
+<!--                                        th:selected="${select == selectSelected}">-->
                                 </option>
                             </select>
                         </div>
                     </div>
                     <div id="Equipment">
-
                         <div class="row">
                             <div class="col">
                                 <select class="form-select" name="status">

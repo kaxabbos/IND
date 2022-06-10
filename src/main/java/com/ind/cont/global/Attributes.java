@@ -64,7 +64,7 @@ public class Attributes extends Global {
         model.addAttribute("roleSelected", role);
         model.addAttribute("deviceStatusSelected", status);
         model.addAttribute("deviceTypeSelected", type);
-        model.addAttribute("selectSelected", select);
+//        model.addAttribute("selectSelected", select);
     }
 
     protected void AddAttributesActionsList(Model model) {
