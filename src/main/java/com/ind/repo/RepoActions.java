@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RepoActions extends JpaRepository<Actions, Long> {
     List<Actions> findByIdUser(Long idUser);
+
+    List<Actions> findByIdUserAndDateStartingWith(Long idUser, String date);
 }

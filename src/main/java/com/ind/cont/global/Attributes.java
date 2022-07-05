@@ -72,10 +72,14 @@ public class Attributes extends Global {
         model.addAttribute("users", repoUsers.findAllByOrderByRole());
     }
 
-    protected void AddAttributesActions(Model model, Long idUser) {
+    protected void AddAttributesActions(Model model, Long idUser, String date) {
         AddAttributes(model);
         model.addAttribute("user", repoUsers.getById(idUser));
-        model.addAttribute("actions", repoActions.findByIdUser(idUser));
+        if (date == null || date.equals("")) {
+            model.addAttribute("actions", repoActions.findByIdUser(idUser));
+        } else {
+            model.addAttribute("actions", repoActions.findByIdUserAndDateStartingWith(idUser, date));
+        }
     }
 
     protected void AddAttributesAdd(Model model) {
