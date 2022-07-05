@@ -77,12 +77,16 @@ public class Global {
         return "Добро пожаловать";
     }
 
-    protected String DateNow() {
+    protected String DateAndTimeNow() {
         String date = LocalDateTime.now().toString();
         return date.substring(0, 10) + " " + date.substring(11, 19);
     }
 
+    protected String DateNow() {
+        return LocalDateTime.now().toString().substring(0, 10);
+    }
+
     protected void AddAction(String action) {
-        repoActions.save(new Actions(getUserID(), action, DateNow()));
+        repoActions.save(new Actions(getUserID(), action, DateAndTimeNow()));
     }
 }

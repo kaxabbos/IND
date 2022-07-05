@@ -21,7 +21,7 @@
                 <form th:action="'/search/' + ${idUser} + '/actions'" method="post" class="mb-20px">
                     <div class="row">
                         <div class="col">
-                            <input class="form-select" type="date" name="date">
+                            <input th:value="${date}" class="form-select" type="date" name="date">
                         </div>
                         <div class="col mxw-100px">
                             <button class="btn btn-primary" type="submit">Поиск</button>

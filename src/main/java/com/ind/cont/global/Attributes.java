@@ -64,7 +64,6 @@ public class Attributes extends Global {
         model.addAttribute("roleSelected", role);
         model.addAttribute("deviceStatusSelected", status);
         model.addAttribute("deviceTypeSelected", type);
-//        model.addAttribute("selectSelected", select);
     }
 
     protected void AddAttributesActionsList(Model model) {
@@ -76,10 +75,12 @@ public class Attributes extends Global {
         AddAttributes(model);
         model.addAttribute("user", repoUsers.getById(idUser));
         if (date == null || date.equals("")) {
-            model.addAttribute("actions", repoActions.findByIdUser(idUser));
+            date = DateNow();
+            model.addAttribute("actions", repoActions.findByIdUserAndDateStartingWith(idUser, date));
         } else {
             model.addAttribute("actions", repoActions.findByIdUserAndDateStartingWith(idUser, date));
         }
+        model.addAttribute("date", date);
     }
 
     protected void AddAttributesAdd(Model model) {
@@ -93,12 +94,6 @@ public class Attributes extends Global {
         model.addAttribute("types", Arrays.asList(DeviceType.values()));
         model.addAttribute("device", repoDevices.getById(idDevice));
         model.addAttribute("DeviceTypeAll", DeviceType.Все);
-    }
-
-    protected void AddAttributesIndex(Model model) {
-        AddAttributes(model);
-        model.addAttribute("user", getUser());
-        model.addAttribute("devices", repoDevices.findAll());
     }
 
     protected void AddAttributesMyDevices(Model model) {
