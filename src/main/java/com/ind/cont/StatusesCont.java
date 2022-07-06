@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class StatusesCont extends Attributes {
 
     @GetMapping("/device/{id}/faulty")
-    public String FaultyDevice(@PathVariable(value = "id") Long id) {
+    public String FaultyDevice(@PathVariable Long id) {
         Devices device = repoDevices.findById(id).orElseThrow();
         device.setStatus(Status.Неисправен);
         if (device.getServesId() != 0L) {
@@ -28,7 +28,7 @@ public class StatusesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/serviceable")
-    public String ServiceableDevice(@PathVariable(value = "id") Long id) {
+    public String ServiceableDevice(@PathVariable Long id) {
         Devices device = repoDevices.findById(id).orElseThrow();
         if (device.getStatus() == Status.Ремонтируется) {
             device.setRepaired(device.getRepaired() + 1);
@@ -49,7 +49,7 @@ public class StatusesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/repair")
-    public String RepairDevice(@PathVariable(value = "id") Long id) {
+    public String RepairDevice(@PathVariable Long id) {
         Devices device = repoDevices.findById(id).orElseThrow();
         device.setStatus(Status.Ремонтируется);
         device.setServes(getFirstnameLastname());
@@ -60,7 +60,7 @@ public class StatusesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/test")
-    public String TestDevice(@PathVariable(value = "id") Long id) {
+    public String TestDevice(@PathVariable Long id) {
         Devices device = repoDevices.findById(id).orElseThrow();
         if (device.getServesId() != 0L) {
             Users user = getUser();
@@ -76,7 +76,7 @@ public class StatusesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/tested")
-    public String TestedDevice(@PathVariable(value = "id") Long id) {
+    public String TestedDevice(@PathVariable Long id) {
         Devices device = repoDevices.findById(id).orElseThrow();
         device.setStatus(Status.Тестируется);
         device.setServes(getFirstnameLastname());

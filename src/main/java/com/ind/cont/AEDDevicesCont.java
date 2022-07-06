@@ -62,7 +62,7 @@ public class AEDDevicesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/edit")
-    public String edit(Model model, @PathVariable(value = "id") Long id) {
+    public String edit(Model model, @PathVariable Long id) {
         AddAttributesEdit(model, id);
         return "edit";
     }
@@ -100,7 +100,7 @@ public class AEDDevicesCont extends Attributes {
     }
 
     @PostMapping("/device/{id}/edit")
-    public String editDevice(Model model, @PathVariable(value = "id") Long id, @RequestParam String name, @RequestParam DeviceType type, @RequestParam String description, @RequestParam MultipartFile file) {
+    public String editDevice(Model model, @PathVariable Long id, @RequestParam String name, @RequestParam DeviceType type, @RequestParam String description, @RequestParam MultipartFile file) {
         Devices device = repoDevices.findById(id).orElseThrow();
         device.setName(name);
         device.setDeviceType(type);
@@ -151,7 +151,7 @@ public class AEDDevicesCont extends Attributes {
     }
 
     @GetMapping("/device/{id}/delete")
-    public String deleteDevice(@PathVariable(value = "id") Long id) {
+    public String deleteDevice(@PathVariable Long id) {
         Devices device = repoDevices.getById(id);
         repoDevices.delete(device);
         AddAction("Устройство удалено: " + device.getName());

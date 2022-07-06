@@ -19,7 +19,7 @@ public class ProfilesCont extends Attributes {
     }
 
     @PostMapping("/profiles/{id}/edit")
-    public String profileEditRole(@PathVariable(value = "id") Long id, @RequestParam Role role) {
+    public String profileEditRole(@PathVariable Long id, @RequestParam Role role) {
         Users user = repoUsers.getById(id);
         user.setRole(role);
         repoUsers.save(user);
@@ -28,7 +28,7 @@ public class ProfilesCont extends Attributes {
     }
 
     @PostMapping("/profiles/{id}/delete")
-    public String profileDelete(Model model, @PathVariable(value = "id") Long id) {
+    public String profileDelete(Model model, @PathVariable Long id) {
         if (id == getUser().getId()) {
             model.addAttribute("message", "Вы не можете удалить самого себя");
             AddAttributesProfiles(model);

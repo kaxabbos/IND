@@ -53,7 +53,7 @@ public class ProfileCont extends Attributes {
     }
 
     @PostMapping("/profile/changeAvatar")
-    String ChangeAvatar(Model model, @RequestParam("avatar") MultipartFile avatar) {
+    String ChangeAvatar(Model model, @RequestParam MultipartFile avatar) {
         if (avatar != null && !Objects.requireNonNull(avatar.getOriginalFilename()).isEmpty()) {
             String uuidFile = UUID.randomUUID().toString();
             boolean createDir = true;
